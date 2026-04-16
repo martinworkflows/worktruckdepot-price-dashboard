@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>CTOS Pricing — Command Center | Work Truck Depot</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#122463;--navy-dark:#0C1A50;--navy-mid:#1A3182;--navy-light:#233EA0;
+  --navy-pale:#E8ECF7;--navy-muted:#D0D7EF;
+  --grey-900:#1A1D2E;--grey-700:#3D4265;--grey-500:#6B7199;
+  --grey-400:#8C91B0;--grey-200:#C8CCE0;--grey-100:#E8EAF0;--grey-50:#F4F5F9;
+  --white:#FFFFFF;
+  --bg-page:var(--grey-50);--bg-row-alt:#F7F8FC;
+  --text-body:var(--grey-900);--text-sub:var(--grey-700);--text-muted:var(--grey-500);
+  --border:var(--grey-200);--border-med:var(--navy-muted);
+  --r:6px;--rl:10px;
+  --touch:44px; /* minimum touch target */
+}
+
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--bg-page);color:var(--text-body);font-size:13px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ══════════════════════════════════════
+   TOPBAR
+══════════════════════════════════════ */
+.topbar{background:var(--navy-dark);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--navy-light)}
+.topbar-brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.logo-mark{width:34px;height:34px;min-width:34px;background:var(--white);border-radius:5px;display:flex;align-items:center;justify-content:center}
+.logo-mark span{font-weight:900;font-size:11px;color:var(--navy);letter-spacing:-.5px}
+.topbar-name{font-size:13px;font-weight:700;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-meta{font-size:10px;color:var(--grey-400);display:none} /* hidden on mobile, shown on wider */
+.topbar-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.topbar-link{font-size:11px;color:var(--grey-400);text-decoration:none;padding:6px 10px;border:1px solid rgba(255,255,255,.2);border-radius:4px;white-space:nowrap;min-height:var(--touch);display:flex;align-items:center}
+.topbar-link:active{background:rgba(255,255,255,.1)}
+.topbar-tag{font-size:10px;background:var(--navy-light);color:var(--white);border-radius:3px;padding:3px 8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.topbar-link.hide-xs{display:none}
+
+/* ══════════════════════════════════════
+   PAGE
+══════════════════════════════════════ */
+.page{max-width:1440px;margin:0 auto;padding:14px 14px 60px}
+
+/* ══════════════════════════════════════
+   PAGE HEADER
+══════════════════════════════════════ */
+.page-header{background:var(--navy);border-radius:var(--rl);padding:14px 16px;margin-bottom:14px}
+.page-title{font-size:16px;font-weight:800;color:var(--white);letter-spacing:-.01em;line-height:1.25}
+.page-sub{font-size:10px;color:var(--grey-400);margin-top:3px;line-height:1.5}
+.hdr-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.btn{font-size:11px;padding:0 13px;height:var(--touch);border-radius:var(--r);border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:var(--white);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-weight:500;-webkit-tap-highlight-color:transparent}
+.btn:active{background:rgba(255,255,255,.25)}
+.btn-white{background:var(--white);color:var(--navy);border-color:var(--white);font-weight:700}
+.btn-white:active{background:var(--grey-100)}
+.btn-outline-white{background:transparent;color:var(--white);border-color:rgba(255,255,255,.5)}
+.btn-outline-white:active{background:rgba(255,255,255,.12)}
+
+/* ══════════════════════════════════════
+   SHARED BUTTON STYLES (outside header)
+══════════════════════════════════════ */
+.btn-navy{background:var(--navy);color:var(--white);border:1px solid var(--navy);border-radius:var(--r);font-size:11px;height:var(--touch);padding:0 12px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.btn-navy:active{background:var(--navy-mid)}
+.btn-ghost{background:var(--white);color:var(--navy);border:1px solid var(--border-med);border-radius:var(--r);font-size:11px;height:var(--touch);padding:0 12px;cursor:pointer;font-weight:500;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.btn-ghost:active{background:var(--navy-pale)}
+.sec-actions{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ══════════════════════════════════════
+   KPI STRIP
+══════════════════════════════════════ */
+.kpi-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+.kpi{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:12px 14px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--navy)}
+.kpi-label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.kpi-value{font-size:22px;font-weight:800;color:var(--navy);line-height:1}
+.kpi-value.hl{color:var(--navy-light)}
+.kpi-note{font-size:9px;color:var(--text-muted);margin-top:3px}
+
+/* ══════════════════════════════════════
+   INSIGHTS — collapsible on mobile
+══════════════════════════════════════ */
+.insights-wrap{margin-bottom:14px}
+.insights-toggle{width:100%;background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:0 16px;height:var(--touch);display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.insights-toggle .arrow{font-size:14px;transition:transform .2s;display:inline-block}
+.insights-toggle.open .arrow{transform:rotate(180deg)}
+.insight-grid{display:none;gap:8px;margin-top:8px}
+.insight-grid.open{display:grid;grid-template-columns:1fr}
+.insight{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.insight-head{background:var(--navy);padding:8px 12px}
+.ins-metric{font-size:18px;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1px}
+.ins-title{font-size:9px;font-weight:700;color:var(--grey-400);text-transform:uppercase;letter-spacing:.05em}
+.insight-body{padding:9px 12px}
+.ins-body{font-size:11px;color:var(--text-sub);line-height:1.5}
+
+/* ══════════════════════════════════════
+   SEARCH BAR — stacks on mobile
+══════════════════════════════════════ */
+.search-bar-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:12px 14px;margin-bottom:12px;display:flex;flex-direction:column;gap:10px}
+.search-inner{display:flex;align-items:center;gap:8px;background:var(--grey-50);border:1px solid var(--border);border-radius:var(--r);padding:0 10px;height:var(--touch)}
+.search-inner:focus-within{border-color:var(--navy);background:var(--white)}
+.search-input{background:transparent;border:none;padding:0 4px;color:var(--text-body);font-size:14px;width:100%;outline:none;height:100%}
+.search-input::placeholder{color:var(--text-muted);font-size:13px}
+.search-icon{color:var(--text-muted);font-size:15px;flex-shrink:0}
+.filters-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.filter-group{display:flex;flex-direction:column;gap:4px}
+.filter-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em}
+.filter-select{background:var(--grey-50);border:1px solid var(--border);border-radius:var(--r);padding:0 10px;color:var(--text-body);font-size:13px;height:var(--touch);width:100%;outline:none;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238C91B0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.filter-select:focus{border-color:var(--navy)}
+.search-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.search-count{font-size:11px;color:var(--text-muted)}
+
+/* ══════════════════════════════════════
+   CATEGORY NAV — horizontal scroll on mobile
+══════════════════════════════════════ */
+.cat-nav{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-btn{padding:0 14px;height:var(--touch);border-radius:20px;border:1px solid var(--border-med);background:var(--white);color:var(--text-sub);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.cat-btn:active{background:var(--navy-pale)}
+.cat-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+/* ══════════════════════════════════════
+   SECTION
+══════════════════════════════════════ */
+.section{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:12px}
+.section-head{background:var(--navy);padding:10px 14px;display:flex;flex-direction:column;gap:8px}
+.sec-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.sec-pill{font-size:11px;font-weight:800;color:var(--white);text-transform:uppercase;letter-spacing:.06em}
+.sec-count{font-size:11px;color:var(--grey-400);font-weight:400}
+.sec-actions{display:flex;gap:6px;flex-wrap:wrap}
+.section-body{padding:12px 14px}
+
+/* ══════════════════════════════════════
+   SUBTABS
+══════════════════════════════════════ */
+.subtabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.subtabs::-webkit-scrollbar{display:none}
+.stab{padding:0 14px;height:40px;font-size:12px;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;font-weight:500;display:flex;align-items:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.stab:active{color:var(--navy)}
+.stab.active{color:var(--navy);font-weight:700;border-bottom-color:var(--navy)}
+
+/* ══════════════════════════════════════
+   LAYOUT — stacks on mobile
+══════════════════════════════════════ */
+.layout2{display:flex;flex-direction:column;gap:14px}
+.chart-wrap{order:2} /* chart always below on mobile */
+
+/* ══════════════════════════════════════
+   TABLE — desktop view
+══════════════════════════════════════ */
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead{display:table-header-group}
+th{font-size:9px;font-weight:700;color:var(--white);background:var(--navy-mid);text-align:left;padding:8px 10px;white-space:nowrap;cursor:pointer;text-transform:uppercase;letter-spacing:.06em;user-select:none}
+th:hover{background:var(--navy-light)}
+th:first-child{border-radius:4px 0 0 4px}
+th:last-child{border-radius:0 4px 4px 0}
+td{padding:7px 10px;border-bottom:1px solid var(--grey-100);vertical-align:middle}
+tr:nth-child(even) td{background:var(--bg-row-alt)}
+tr:last-child td{border-bottom:none}
+.price-val{font-weight:700;color:var(--navy);font-size:12px}
+.price-cad{font-weight:700;color:var(--grey-700);font-size:12px}
+.price-call{color:var(--text-muted);font-style:italic;font-size:11px}
+.mono{font-size:10px;color:var(--text-muted)}
+.no-results{text-align:center;padding:28px;color:var(--text-muted);font-size:12px}
+.units-note{font-size:10px;color:var(--text-muted);margin-top:2px}
+
+/* ══════════════════════════════════════
+   MOBILE CARD VIEW — replaces table rows
+══════════════════════════════════════ */
+.card-list{display:none;flex-direction:column;gap:8px}
+.eq-card{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.eq-card-head{background:var(--navy-pale);padding:10px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;border-bottom:1px solid var(--navy-muted)}
+.eq-card-model{font-weight:700;color:var(--navy);font-size:13px;line-height:1.35;flex:1;min-width:0}
+.eq-card-price{font-weight:800;color:var(--navy);font-size:14px;white-space:nowrap;flex-shrink:0;text-align:right}
+.eq-card-price.cad{color:var(--grey-700)}
+.eq-card-price.cfq{color:var(--text-muted);font-size:11px;font-style:italic;font-weight:500}
+.eq-card-body{padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:5px 10px}
+.eq-card-row{display:flex;flex-direction:column;gap:1px}
+.eq-card-row.full{grid-column:1/-1}
+.eq-field-label{font-size:9px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em}
+.eq-field-val{font-size:12px;color:var(--text-sub)}
+.eq-card-foot{padding:8px 12px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;border-top:1px solid var(--grey-100);background:var(--grey-50)}
+
+/* ══════════════════════════════════════
+   BADGES
+══════════════════════════════════════ */
+.badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.03em;white-space:nowrap}
+.b-new{background:var(--navy-pale);color:var(--navy);border:1px solid var(--navy-muted)}
+.b-used{background:var(--grey-100);color:var(--grey-700);border:1px solid var(--grey-200)}
+.b-pend{background:var(--grey-100);color:var(--grey-500);border:1px solid var(--grey-200)}
+.b-call{background:var(--navy-pale);color:var(--navy-mid);border:1px solid var(--navy-muted)}
+.b-ev{background:var(--navy-pale);color:var(--navy-light);border:1px solid var(--navy-muted)}
+.b-tf{background:var(--navy);color:var(--white);border:1px solid var(--navy)}
+.b-cs{background:var(--grey-100);color:var(--grey-700);border:1px solid var(--grey-200)}
+
+/* ══════════════════════════════════════
+   CHART
+══════════════════════════════════════ */
+.chart-title{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.legend{display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted)}
+.leg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* ══════════════════════════════════════
+   SPEC GUIDE
+══════════════════════════════════════ */
+.spec-section{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:12px}
+.spec-section .section-head{flex-direction:row;align-items:center}
+.spec-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border)}
+.spec-item{padding:12px 14px;background:var(--white)}
+.spec-title{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.spec-title::before{content:'';width:3px;height:13px;background:var(--navy);border-radius:2px;flex-shrink:0}
+.spec-body{font-size:11px;color:var(--text-sub);line-height:1.55}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:10px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px}
+.footer a{color:var(--text-muted);text-decoration:none}
+.conf-tag{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em}
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--navy);color:var(--white);padding:10px 20px;border-radius:var(--r);font-size:12px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;border-left:4px solid var(--navy-light);white-space:nowrap}
+#toast.show{opacity:1}
+
+/* ══════════════════════════════════════
+   TABLET (≥600px)
+══════════════════════════════════════ */
+@media(min-width:600px){
+  .page{padding:18px 20px 60px}
+  .topbar-meta{display:block}
+  .topbar-link.hide-xs{display:flex}
+  .page-title{font-size:18px}
+  .kpi-strip{grid-template-columns:repeat(3,1fr)}
+  .insight-grid{grid-template-columns:repeat(2,1fr)}
+  .filters-row{grid-template-columns:repeat(4,1fr)}
+  .search-bar-wrap{flex-direction:row;align-items:center;flex-wrap:wrap}
+  .search-inner{flex:1;min-width:200px}
+  .filters-row{flex:1;min-width:0}
+  .filter-group{flex-direction:row;align-items:center;gap:6px}
+  .filter-label{white-space:nowrap}
+  .filter-select{height:38px}
+  .search-footer{border-left:1px solid var(--border);padding-left:10px}
+  .spec-grid{grid-template-columns:repeat(2,1fr)}
+  .section-head{flex-direction:row;align-items:center}
+  .sec-top{flex:1}
+  .hdr-actions{margin-top:0;justify-content:flex-end}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start}
+}
+
+/* ══════════════════════════════════════
+   DESKTOP (≥900px) — restore table view, side-by-side layout
+══════════════════════════════════════ */
+@media(min-width:900px){
+  .page{padding:24px 28px 60px}
+  .topbar{padding:0 32px}
+  .page-title{font-size:19px}
+  .kpi-strip{grid-template-columns:repeat(6,1fr);gap:10px}
+  .kpi-value{font-size:24px}
+  .insight-grid{grid-template-columns:repeat(4,1fr)}
+  .insights-toggle{display:none}
+  .insight-grid{display:grid!important;margin-top:0}
+  .insights-wrap{margin-bottom:18px}
+  .search-bar-wrap{flex-direction:row;align-items:center;padding:12px 16px;gap:12px;flex-wrap:wrap}
+  .filters-row{display:contents} /* dissolve grid wrapper — items flow inline */
+  .filter-group{flex-direction:row;align-items:center;gap:7px;flex-shrink:0}
+  .filter-label{white-space:nowrap;font-size:10px}
+  .filter-select{width:auto;height:36px;padding:0 28px 0 10px}
+  .search-footer{border-left:1px solid var(--border);padding-left:10px;margin-left:auto}
+  .layout2{flex-direction:row;align-items:start}
+  .layout2 .tscroll{flex:1;min-width:0}
+  .chart-wrap{width:270px;flex-shrink:0;order:0}
+  /* Desktop: show table, hide cards */
+  table{display:table}
+  thead{display:table-header-group}
+  tbody{display:table-row-group}
+  .card-list{display:none!important}
+  .tscroll{overflow-x:auto}
+  .spec-grid{grid-template-columns:repeat(3,1fr)}
+  .footer{flex-direction:row;justify-content:space-between}
+  .section-head{padding:11px 18px}
+  .section-body{padding:16px 18px}
+  #toast{bottom:24px;left:auto;right:24px;transform:none}
+}
+
+/* ══════════════════════════════════════
+   MOBILE ONLY (< 900px) — card view
+══════════════════════════════════════ */
+@media(max-width:899px){
+  /* Hide the table, show cards */
+  .tscroll{display:none}
+  .card-list{display:flex}
+}
+
+/* ══════════════════════════════════════
+   PRINT
+══════════════════════════════════════ */
+@media print{
+  .topbar,.hdr-actions,.cat-nav,.search-bar-wrap,.insights-toggle,.sec-actions{display:none!important}
+  .insight-grid{display:grid!important}
+  .section{break-inside:avoid}
+  body{background:var(--white)}
+  .layout2{flex-direction:column}
+  .card-list{display:none!important}
+  .tscroll{display:block!important}
+  table{display:table!important}
+  thead{display:table-header-group!important}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="logo-mark"><span>WTD</span></div>
+    <div>
+      <div class="topbar-name">Work Truck Depot</div>
+      <div class="topbar-meta">CTOS Pricing Command Center</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-tag">Live</span>
+    <a class="topbar-link hide-xs" href="https://www.theworktruckdepot.com/" target="_blank">WTD ↗</a>
+    <a class="topbar-link" href="tel:8882364238">(888) 236-4238</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div>
+      <div class="page-title">CTOS Equipment Pricing — Command Center</div>
+      <div class="page-sub">Bucket Trucks · Digger Derricks · Forestry · Pulling &amp; Tensioning · New &amp; Used · March 25, 2026</div>
+    </div>
+    <div class="hdr-actions">
+      <a class="btn" href="https://www.customtruck.com/request-a-quote/" target="_blank">Quote ↗</a>
+      <a class="btn" href="https://www.theworktruckdepot.com/rental-equipment" target="_blank">WTD Rentals ↗</a>
+      <button class="btn btn-outline-white" onclick="exportCSV()">⬇ CSV</button>
+      <button class="btn btn-white" onclick="window.print()">🖨 Print</button>
+    </div>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-label">Total listings</div><div class="kpi-value" id="kpi-total">—</div><div class="kpi-note">4 categories</div></div>
+    <div class="kpi"><div class="kpi-label">Showing</div><div class="kpi-value hl" id="kpi-showing">—</div><div class="kpi-note">After filters</div></div>
+    <div class="kpi"><div class="kpi-label">New units</div><div class="kpi-value" id="kpi-new">—</div><div class="kpi-note">New inventory</div></div>
+    <div class="kpi"><div class="kpi-label">Used units</div><div class="kpi-value" id="kpi-used">—</div><div class="kpi-note">Pre-Owned</div></div>
+    <div class="kpi"><div class="kpi-label">Price floor</div><div class="kpi-value" id="kpi-min">—</div><div class="kpi-note">Lowest unit</div></div>
+    <div class="kpi"><div class="kpi-label">Avg price</div><div class="kpi-value hl" id="kpi-avg">—</div><div class="kpi-note">USD excl. CFQ</div></div>
+  </div>
+
+  <!-- INSIGHTS (collapsible on mobile) -->
+  <div class="insights-wrap">
+    <button class="insights-toggle" onclick="toggleInsights(this)">
+      Strategic Insights <span class="arrow">▼</span>
+    </button>
+    <div class="insight-grid" id="insightGrid">
+      <div class="insight"><div class="insight-head"><div class="ins-metric">4.7×</div><div class="ins-title">New vs. used spread</div></div><div class="insight-body"><div class="ins-body">New 2025 RAM SST-40 at $164,900 vs. 2017 F-350 DTS29 at $32,500. Used inventory delivers deep value for secondary fleet and storm response.</div></div></div>
+      <div class="insight"><div class="insight-head"><div class="ins-metric">$62–$260K</div><div class="ins-title">Digger derrick used range</div></div><div class="insight-body"><div class="ins-body">14 pre-owned units, 2016–2020 vintage. 6x6 Terex A650-40 Pressure Digger at $259,500 is the outlier — specialized, limited competition.</div></div></div>
+      <div class="insight"><div class="insight-head"><div class="ins-metric">$88–$346K</div><div class="ins-title">Forestry full spectrum</div></div><div class="insight-body"><div class="ins-body">Chip trucks at $87.5K. Terex XT Pro 60/70 ORA at $182–221K for T-line ROW clearance. Palfinger grapple loaders top at $337–$346K.</div></div></div>
+      <div class="insight"><div class="insight-head"><div class="ins-metric">$1K–$290K</div><div class="ins-title">Widest range: P&amp;T</div></div><div class="insight-body"><div class="ins-body">Split reels at $1K; CLP500 continuous line puller at $289,500. Reel trailers at $13,800 = immediate T&amp;D fleet value-add.</div></div></div>
+    </div>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar-wrap">
+    <div class="search-inner">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="search" id="globalSearch" placeholder="Search model, spec, location…" oninput="applyFilters()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+    </div>
+    <div class="filters-row">
+      <div class="filter-group">
+        <label class="filter-label" for="fCat">Category</label>
+        <select class="filter-select" id="fCat" onchange="applyFilters()">
+          <option value="">All</option>
+          <option value="bucket">Bucket Trucks</option>
+          <option value="digger">Digger Derricks</option>
+          <option value="forest">Forestry</option>
+          <option value="pull">Pulling &amp; Tensioning</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label" for="fCond">Condition</label>
+        <select class="filter-select" id="fCond" onchange="applyFilters()">
+          <option value="">All</option>
+          <option value="New">New</option>
+          <option value="Used">Used</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label" for="fStatus">Status</label>
+        <select class="filter-select" id="fStatus" onchange="applyFilters()">
+          <option value="">All</option>
+          <option value="avail">Available</option>
+          <option value="pend">Pending</option>
+          <option value="call">Call for Quote</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label" for="fPrice">Max Price</label>
+        <select class="filter-select" id="fPrice" onchange="applyFilters()">
+          <option value="">Any</option>
+          <option value="50000">Under $50K</option>
+          <option value="100000">Under $100K</option>
+          <option value="150000">Under $150K</option>
+          <option value="200000">Under $200K</option>
+          <option value="300000">Under $300K</option>
+        </select>
+      </div>
+    </div>
+    <div class="search-footer">
+      <span class="search-count" id="searchCount">— results</span>
+      <button class="btn-ghost" onclick="clearFilters()" style="margin-left:8px">✕ Clear</button>
+    </div>
+  </div>
+
+  <!-- CAT NAV -->
+  <div class="cat-nav">
+    <button class="cat-btn active" onclick="showCat('all',this)">All</button>
+    <button class="cat-btn" onclick="showCat('bucket',this)">Bucket Trucks</button>
+    <button class="cat-btn" onclick="showCat('digger',this)">Digger Derricks</button>
+    <button class="cat-btn" onclick="showCat('forest',this)">Forestry</button>
+    <button class="cat-btn" onclick="showCat('pull',this)">Pulling &amp; Tensioning</button>
+  </div>
+
+  <!-- BUCKET TRUCKS -->
+  <div class="section" id="sec-bucket">
+    <div class="section-head">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="sec-pill">Bucket Trucks</span>
+          <span class="sec-count" id="bucket-count">—</span>
+        </div>
+        <div class="sec-actions">
+          <button class="btn-ghost" onclick="sortSec('bucket','price',true)">$ ↑</button>
+          <button class="btn-ghost" onclick="sortSec('bucket','price',false)">$ ↓</button>
+          <button class="btn-ghost" onclick="sortSec('bucket','year',false)">Newest</button>
+          <button class="btn-navy" onclick="exportSectionCSV('bucket','Bucket Trucks')">⬇ CSV</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="subtabs"><div class="stab active" onclick="filterSec('bucket','All',this)">All</div><div class="stab" onclick="filterSec('bucket','New',this)">New</div><div class="stab" onclick="filterSec('bucket','Used',this)">Used</div></div>
+      <div class="layout2">
+        <div class="tscroll"><table><thead><tr><th>Cond.</th><th>Year</th><th>Model / Equipment</th><th>Chassis</th><th>Reach / Spec</th><th>Price</th><th>Mileage / Hrs</th><th>Status</th><th>Location</th></tr></thead><tbody id="tb-bucket"></tbody></table></div>
+        <div class="card-list" id="cl-bucket"></div>
+        <div class="chart-wrap">
+          <div class="chart-title">Price range ($K)</div>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#122463"></div>New</div><div class="leg"><div class="leg-dot" style="background:#8C91B0"></div>Used</div></div>
+          <div style="position:relative;height:280px"><canvas id="ch-bucket"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIGGER DERRICKS -->
+  <div class="section" id="sec-digger">
+    <div class="section-head">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="sec-pill">Digger Derricks</span>
+          <span class="sec-count" id="digger-count">—</span>
+        </div>
+        <div class="sec-actions">
+          <button class="btn-ghost" onclick="sortSec('digger','price',true)">$ ↑</button>
+          <button class="btn-ghost" onclick="sortSec('digger','price',false)">$ ↓</button>
+          <button class="btn-ghost" onclick="sortSec('digger','year',false)">Newest</button>
+          <button class="btn-navy" onclick="exportSectionCSV('digger','Digger Derricks')">⬇ CSV</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="subtabs"><div class="stab active" onclick="filterSec('digger','All',this)">All</div><div class="stab" onclick="filterSec('digger','New',this)">New</div><div class="stab" onclick="filterSec('digger','Used',this)">Used</div></div>
+      <div class="layout2">
+        <div class="tscroll"><table><thead><tr><th>Cond.</th><th>Year</th><th>Model / Equipment</th><th>Chassis</th><th>Key Spec</th><th>Price</th><th>Mileage / Hrs</th><th>Status</th><th>Location</th></tr></thead><tbody id="tb-digger"></tbody></table></div>
+        <div class="card-list" id="cl-digger"></div>
+        <div class="chart-wrap">
+          <div class="chart-title">Price range ($K)</div>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#122463"></div>New/CFQ</div><div class="leg"><div class="leg-dot" style="background:#8C91B0"></div>Used</div></div>
+          <div style="position:relative;height:280px"><canvas id="ch-digger"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORESTRY -->
+  <div class="section" id="sec-forest">
+    <div class="section-head">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="sec-pill">Forestry</span>
+          <span class="sec-count" id="forest-count">—</span>
+        </div>
+        <div class="sec-actions">
+          <button class="btn-ghost" onclick="sortSec('forest','price',true)">$ ↑</button>
+          <button class="btn-ghost" onclick="sortSec('forest','price',false)">$ ↓</button>
+          <button class="btn-ghost" onclick="sortSec('forest','year',false)">Newest</button>
+          <button class="btn-navy" onclick="exportSectionCSV('forest','Forestry')">⬇ CSV</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="subtabs"><div class="stab active" onclick="filterSec('forest','All',this)">All</div><div class="stab" onclick="filterSec('forest','New',this)">New</div><div class="stab" onclick="filterSec('forest','Used',this)">Used</div></div>
+      <div class="layout2">
+        <div class="tscroll"><table><thead><tr><th>Cond.</th><th>Year</th><th>Model / Equipment</th><th>Chassis</th><th>Type</th><th>Price</th><th>Mileage / Hrs</th><th>Status</th><th>Location</th></tr></thead><tbody id="tb-forest"></tbody></table></div>
+        <div class="card-list" id="cl-forest"></div>
+        <div class="chart-wrap">
+          <div class="chart-title">Price range ($K)</div>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#122463"></div>New</div><div class="leg"><div class="leg-dot" style="background:#8C91B0"></div>Used</div></div>
+          <div style="position:relative;height:280px"><canvas id="ch-forest"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PULLING & TENSIONING -->
+  <div class="section" id="sec-pull">
+    <div class="section-head">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="sec-pill">Pulling &amp; Tensioning</span>
+          <span class="sec-count" id="pull-count">—</span>
+        </div>
+        <div class="sec-actions">
+          <button class="btn-ghost" onclick="sortSec('pull','price',true)">$ ↑</button>
+          <button class="btn-ghost" onclick="sortSec('pull','price',false)">$ ↓</button>
+          <button class="btn-ghost" onclick="sortSec('pull','year',false)">Newest</button>
+          <button class="btn-navy" onclick="exportSectionCSV('pull','Pulling & Tensioning')">⬇ CSV</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="subtabs"><div class="stab active" onclick="filterSec('pull','All',this)">All</div><div class="stab" onclick="filterSec('pull','New',this)">New</div><div class="stab" onclick="filterSec('pull','Used',this)">Used</div></div>
+      <div class="layout2">
+        <div class="tscroll"><table><thead><tr><th>Cond.</th><th>Year</th><th>Model / Equipment</th><th>Make / Mount</th><th>Type</th><th>Price</th><th>Hrs / Mi</th><th>Status</th><th>Location</th></tr></thead><tbody id="tb-pull"></tbody></table></div>
+        <div class="card-list" id="cl-pull"></div>
+        <div class="chart-wrap">
+          <div class="chart-title">Price range ($K)</div>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#122463"></div>New</div><div class="leg"><div class="leg-dot" style="background:#8C91B0"></div>Used</div></div>
+          <div style="position:relative;height:260px"><canvas id="ch-pull"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC GUIDE -->
+  <div class="spec-section">
+    <div class="section-head" style="flex-direction:row;align-items:center"><span class="sec-pill">Utility Buyer Spec Guide</span></div>
+    <div class="spec-grid">
+      <div class="spec-item"><div class="spec-title">Working height — bucket trucks</div><div class="spec-body">Distribution: 40–55ft. Transmission ROW: 60–75ft. ORA/BOC = overcenter articulating — maximizes access over obstacles.</div></div>
+      <div class="spec-item"><div class="spec-title">Insulation class</div><div class="spec-body">Class A ≤7.5kV · B ≤15kV · C ≤25kV · D ≤46kV · E ≤69kV. EIH = Electrically Insulated Hydraulics. Match to your voltage tier.</div></div>
+      <div class="spec-item"><div class="spec-title">Digger derrick — sheave height</div><div class="spec-body">C4047 = 47.4ft, 24,750 lb for distribution pole-setting. C6060 = 60ft for transmission. Insulation rating critical for live-line work.</div></div>
+      <div class="spec-item"><div class="spec-title">Pulling &amp; tensioning — line type</div><div class="spec-body">BWT = conductor stringing. ODP = underground cable. CLP = continuous line puller for reconductoring. Match to your stringing method.</div></div>
+      <div class="spec-item"><div class="spec-title">4x4 vs. 4x2 drivetrain</div><div class="spec-body">Storm response and ROW access require 4x4 for most utility fleets. 4x2 adequate for urban paved routes. New unit premium: ~$8–15K.</div></div>
+      <div class="spec-item"><div class="spec-title">GVW &amp; bridge law</div><div class="spec-body">F550/5500 = Class 5 (~18K GVWR). M2106 = Class 6–7 (26–33K). 6x6 for max off-road load. Verify bridge ratings on ROW routes.</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Source: <a href="https://www.customtruck.com/" target="_blank">customtruck.com</a> · Data: March 25, 2026 · Prices subject to change.</span>
+    <span class="conf-tag">Confidential · theworktruckdepot.com</span>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const DATA={
+bucket:[
+  {cond:'New',year:2025,model:'Versalift VST-40-MHI',chassis:'Ford F600 4x4',spec:'40ft OC · Insulated',price:199500,priceStr:'$199,500',mi:'—',status:'avail',loc:'Commerce City, CO',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Versalift SST-40-EIH',chassis:'RAM 5500 4x4',spec:'40ft Non-OC · EIH',price:164900,priceStr:'$164,900',mi:'—',status:'avail',loc:'Alvarado, TX',ev:false,tf:true,units:8},
+  {cond:'New',year:2023,model:'Versalift SST-40-EIH',chassis:'RAM 5500 4x4',spec:'40ft Non-OC · EIH',price:164900,priceStr:'$164,900',mi:'—',status:'avail',loc:'Fontana, CA',ev:false,tf:false,units:1},
+  {cond:'New',year:2024,model:'Versalift SST-40-EIH',chassis:'Ford F550 4x4',spec:'40ft Non-OC · EIH',price:164160,priceStr:'$164,160',mi:'—',status:'avail',loc:'Calgary, AB',ev:false,tf:false,units:1},
+  {cond:'New',year:2024,model:'Versalift SST-40-EIH (CAD)',chassis:'RAM 5500 4x4',spec:'40ft Non-OC · EIH',price:232900,priceStr:'CAD $232,900',mi:'—',status:'avail',loc:'Union Grove, WI',ev:false,tf:false,units:1,cad:true},
+  {cond:'New',year:2025,model:'Versalift SST-40-EIH',chassis:'Ford F550 4x2',spec:'40ft Non-OC · EIH',price:157500,priceStr:'$157,500',mi:'—',status:'avail',loc:'Alvarado, TX',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Versalift VST-55-I',chassis:'Ford F600 4x4',spec:'55ft OC · Insulated',price:213405,priceStr:'$213,405',mi:'—',status:'pend',loc:'Wyandanch, NY',ev:false,tf:false,units:1},
+  {cond:'New',year:2024,model:'Versalift VST-47-MHI',chassis:'Ford F600 4x4',spec:'47ft OC · Mat. Handler',price:207800,priceStr:'$207,800',mi:'—',status:'avail',loc:'Alvarado, TX',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Versalift VST-47-MHI',chassis:'Ford F600 4x4',spec:'47ft OC · Mat. Handler',price:207800,priceStr:'$207,800',mi:'—',status:'pend',loc:'Alvarado, TX',ev:false,tf:false,units:1},
+  {cond:'New',year:2027,model:'Terex TC55 Optima',chassis:'Freightliner M2106 4x2',spec:'55ft · Overcenter',price:239150,priceStr:'$239,150',mi:'—',status:'avail',loc:'Union Grove, WI',ev:false,tf:false,units:2},
+  {cond:'New',year:2026,model:'Versalift VTP-40-NE Cable Placer',chassis:'Freightliner M2106 4x2',spec:'40ft · Cable Placer',price:238900,priceStr:'$238,900',mi:'—',status:'avail',loc:'Union Grove, WI',ev:false,tf:false,units:6},
+  {cond:'New',year:2026,model:'Versalift SST-40-EIH',chassis:'RAM 5500 4x4',spec:'40ft Non-OC · EIH',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Alvarado, TX',ev:false,tf:false,units:5},
+  {cond:'New',year:2022,model:'Versalift VST-52-MHI',chassis:'Peterbilt 220 EV 4x2',spec:'52ft OC · Electric',price:null,priceStr:'Call for Quote',mi:'—',status:'pend',loc:'Kansas City, MO',ev:true,tf:false,units:1},
+  {cond:'Used',year:2025,model:'Terex LT-40',chassis:'Ford F-600 4x4',spec:'40ft · Non-OC',price:153500,priceStr:'$153,500',mi:'3,721 mi / 91 hrs',status:'pend',loc:'Union Grove, WI',ev:false,tf:false,units:1},
+  {cond:'Used',year:2023,model:'Terex XT Pro 60/70 Forestry',chassis:'Freightliner M2106 4x2',spec:'60/70ft · Forestry OC',price:179500,priceStr:'$179,500',mi:'21,638 mi / 2,625 hrs',status:'avail',loc:'Kansas City, MO',ev:false,tf:false,units:1},
+  {cond:'Used',year:2022,model:'Terex LT-40',chassis:'RAM 5500 4x4',spec:'40ft · Non-OC',price:129500,priceStr:'$129,500',mi:'20,889 mi / 791 hrs',status:'avail',loc:'Union Grove, WI',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'Duralift DTAX-39FP',chassis:'RAM 5500 4x4',spec:'39ft · Overcenter',price:74500,priceStr:'$74,500',mi:'90,160 mi / 5,626 hrs',status:'avail',loc:'Canton, OH',ev:false,tf:false,units:1},
+  {cond:'Used',year:2017,model:'Terex HRX-55',chassis:'Freightliner M2106 4x2',spec:'55ft · Non-OC',price:66500,priceStr:'$66,500',mi:'65,920 mi / 2,632 hrs',status:'avail',loc:'Syracuse, NY',ev:false,tf:false,units:1},
+  {cond:'Used',year:2016,model:'Elliott L60R Hi-Rail',chassis:'Freightliner M2106 4x2',spec:'60ft · Hi-Rail',price:110500,priceStr:'$110,500',mi:'10,776 mi / 2,795 hrs',status:'avail',loc:'Sacramento, CA',ev:false,tf:false,units:1},
+  {cond:'Used',year:2016,model:'Terex LT-40',chassis:'Dodge Ram 5500 4x2',spec:'40ft · Non-OC',price:44500,priceStr:'$44,500',mi:'75,253 mi / 8,917 hrs',status:'avail',loc:'Union Grove, WI',ev:false,tf:false,units:1},
+  {cond:'Used',year:2018,model:'DUR-A-LIFT DTS-29',chassis:'Dodge Ram 3500 4x2',spec:'29ft · Non-OC',price:37500,priceStr:'$37,500',mi:'122,882 mi / 4,824 hrs',status:'avail',loc:'Canton, OH',ev:false,tf:false,units:1},
+  {cond:'Used',year:2018,model:'DUR-A-LIFT DTS29',chassis:'Dodge Ram 3500 4x2',spec:'29ft · Non-OC',price:39500,priceStr:'$39,500',mi:'38,639 mi / 3,450 hrs',status:'pend',loc:'Wyandanch, NY',ev:false,tf:false,units:1},
+  {cond:'Used',year:2017,model:'Dur-A-Lift DTS29',chassis:'Ford F-350 4x2',spec:'29ft · Non-OC',price:32500,priceStr:'$32,500',mi:'68,975 mi / 2,977 hrs',status:'avail',loc:'Cinnaminson, NJ',ev:false,tf:false,units:1},
+  {cond:'Used',year:2015,model:'Terex 5TC-55',chassis:'Ford F-750 4x2',spec:'55ft · Non-OC',price:45500,priceStr:'$45,500',mi:'55,890 mi / 5,983 hrs',status:'avail',loc:'Calgary, AB',ev:false,tf:false,units:1},
+],
+digger:[
+  {cond:'New',year:2024,model:'Terex Commander C4047',chassis:'Freightliner M2106 4x4',spec:'47.4ft · 24,750 lb · FET incl.',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Various',ev:false,tf:false,units:3},
+  {cond:'New',year:2024,model:'Terex Commander C4047',chassis:'Freightliner M2106 4x2',spec:'47.4ft · 24,750 lb · FET incl.',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Various',ev:false,tf:false,units:2},
+  {cond:'New',year:2024,model:'Terex Commander C6060',chassis:'Freightliner M2106 6x6',spec:'60ft · 14,130 lb @ 12ft · Cat. C',price:null,priceStr:'Call for Quote',mi:'571 mi',status:'call',loc:'Union Grove, WI',ev:false,tf:false,units:1},
+  {cond:'Used',year:2020,model:'Terex C4047',chassis:'Freightliner M2106 4x4',spec:'47.4ft · 24,750 lb',price:148500,priceStr:'$148,500',mi:'99,090 mi / 5,448 hrs',status:'pend',loc:'Odessa, TX',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'Terex C4047 Hi-Rail',chassis:'Freightliner M2106 4x2',spec:'47.4ft · Hi-Rail equipped',price:104500,priceStr:'$104,500',mi:'28,823 mi / 3,261 hrs',status:'avail',loc:'Wyandanch, NY',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'Terex C4047',chassis:'Freightliner M2106 4x4',spec:'47.4ft · 24,750 lb',price:124500,priceStr:'$124,500',mi:'112,137 mi / 7,797 hrs',status:'avail',loc:'Odessa, TX',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'Terex C4047',chassis:'Freightliner M2106 4x4',spec:'47.4ft · 24,750 lb',price:122500,priceStr:'$122,500',mi:'141,960 mi / 9,743 hrs',status:'avail',loc:'Odessa, TX',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'Terex C4047',chassis:'Freightliner M2106 4x4',spec:'47.4ft · 24,750 lb',price:124500,priceStr:'$124,500',mi:'87,918 mi / 7,113 hrs',status:'avail',loc:'Kansas City, MO',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'Terex C4047',chassis:'Freightliner M2106 4x2',spec:'47.4ft · 24,750 lb',price:124500,priceStr:'$124,500',mi:'71,912 mi / 5,318 hrs',status:'avail',loc:'Kansas City, MO',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'Versalift TMD-2047-T',chassis:'International MV607 4x2',spec:'47ft · Distribution DD',price:82500,priceStr:'$82,500',mi:'14,360 mi / 3,951 hrs',status:'avail',loc:'Bakersfield, CA',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'Versalift TMD-2047-T',chassis:'Ford F-750 4x2',spec:'47ft · Distribution DD',price:82500,priceStr:'$82,500',mi:'56,493 mi / 3,951 hrs',status:'avail',loc:'Alexandria, LA',ev:false,tf:false,units:1},
+  {cond:'Used',year:2018,model:'Terex C4047',chassis:'Freightliner M2106 4x2',spec:'47.4ft · 24,750 lb',price:89500,priceStr:'$89,500',mi:'56,846 mi / 5,074 hrs',status:'avail',loc:'Bakersfield, CA',ev:false,tf:false,units:1},
+  {cond:'Used',year:2018,model:'Terex C4047',chassis:'Freightliner M2106 4x2',spec:'47.4ft · 24,750 lb',price:82500,priceStr:'$82,500',mi:'~70K mi',status:'avail',loc:'El Reno, OK',ev:false,tf:false,units:1},
+  {cond:'Used',year:2017,model:'Terex C4047',chassis:'Freightliner M2106 4x4',spec:'47.4ft · 24,750 lb',price:79500,priceStr:'$79,500',mi:'74,845 mi / 6,849 hrs',status:'avail',loc:'Union Grove, WI',ev:false,tf:false,units:1},
+  {cond:'Used',year:2016,model:'Terex C4047',chassis:'Freightliner M2106 4x2',spec:'47.4ft · 24,750 lb',price:64500,priceStr:'$64,500',mi:'63,006 mi / 5,524 hrs',status:'avail',loc:'Ogden, UT',ev:false,tf:false,units:1},
+  {cond:'Used',year:2016,model:'Terex A650-40 Pressure Digger',chassis:'Freightliner M2106 6x6',spec:'40ft · Pressure digger · 6x6',price:259500,priceStr:'$259,500',mi:'33,561 mi / 1,760 hrs',status:'avail',loc:'Kansas City, MO',ev:false,tf:false,units:1},
+  {cond:'Used',year:2019,model:'SDP EZ Hauler 55MLP + Trailer',chassis:'Track-mounted',spec:'55ft sheave · Backyard access',price:62500,priceStr:'$62,500',mi:'233 hrs',status:'avail',loc:'El Reno, OK',ev:false,tf:false,units:1},
+],
+forest:[
+  {cond:'New',year:2026,model:'Terex XT PRO 60/70-ORA-F-PC',chassis:'Freightliner M2106 4x2',spec:'60/70ft ORA Forestry',price:215259,priceStr:'$215,259',mi:'—',status:'pend',loc:'Forest, VA',subcat:'Forestry Bucket',ev:false,tf:false,units:1},
+  {cond:'New',year:2026,model:'Terex XT PRO 60/70-ORA-F-PC',chassis:'Freightliner M2106 4x2',spec:'60/70ft ORA Forestry',price:204925,priceStr:'$204,925',mi:'—',status:'pend',loc:'Forest, VA',subcat:'Forestry Bucket',ev:false,tf:false,units:1},
+  {cond:'New',year:2026,model:'Terex XT PRO 60/70-ORA-F-PC',chassis:'Freightliner M2106 4x2',spec:'60/70ft ORA Forestry',price:204925,priceStr:'$204,925',mi:'1,087 mi / 39 hrs',status:'pend',loc:'Union Grove, WI',subcat:'Forestry Bucket',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Terex XT PRO 60/70-ORA-F-PC',chassis:'Freightliner M2106 4x2',spec:'60/70ft ORA Forestry',price:210954,priceStr:'$210,954',mi:'—',status:'avail',loc:'Forest, VA',subcat:'Forestry Bucket',ev:false,tf:true,units:1},
+  {cond:'New',year:2025,model:'Terex XT PRO 60/70-BOC-F-PC',chassis:'Freightliner M2106 4x2',spec:'60/70ft BOC Forestry',price:221010,priceStr:'$221,010',mi:'—',status:'pend',loc:'Forest, VA',subcat:'Forestry Bucket',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Terex XT PRO 60-ORA-F-PC',chassis:'Freightliner M2106 4x2',spec:'60ft ORA Forestry',price:182428,priceStr:'$182,428',mi:'—',status:'avail',loc:'Forest, VA',subcat:'Forestry Bucket',ev:false,tf:true,units:1},
+  {cond:'New',year:2024,model:'Terex XT PRO 60-ORA-F-PC',chassis:'Freightliner M2106 4x2',spec:'60ft ORA Forestry',price:182428,priceStr:'$182,428',mi:'—',status:'avail',loc:'Decatur, GA',subcat:'Forestry Bucket',ev:false,tf:true,units:1},
+  {cond:'New',year:2026,model:'Terex XT PRO 56-BOC-F-PC',chassis:'International MV607 4x2',spec:'56ft BOC Non-CDL',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Forest, VA',subcat:'Forestry Bucket',ev:false,tf:false,units:2},
+  {cond:'New',year:2025,model:'Fassi F145AZ.0.22 Grapple',chassis:'Freightliner M2106 4x2',spec:'Forestry grapple loader',price:194545,priceStr:'$194,545',mi:'—',status:'avail',loc:'Forest, VA',subcat:'Grapple',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Fassi F115A.0.22 Grapple',chassis:'Freightliner M2106 4x2',spec:'Forestry grapple loader',price:190203,priceStr:'$190,203',mi:'—',status:'avail',loc:'Decatur, GA',subcat:'Grapple',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Palfinger Epsilon M13A80',chassis:'Peterbilt 567 8x4',spec:'Heavy grapple · FET incl.',price:345606,priceStr:'$345,606',mi:'—',status:'avail',loc:'Kansas City, MO',subcat:'Grapple',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Palfinger Epsilon M13A80',chassis:'Peterbilt 567 6x4',spec:'Heavy grapple · FET incl.',price:337106,priceStr:'$337,106',mi:'—',status:'avail',loc:'Alvarado, TX',subcat:'Grapple',ev:false,tf:false,units:1},
+  {cond:'New',year:2026,model:'Arbortech 14x72 Chip Truck',chassis:'International MV607 4x2',spec:'14x72 chip box Non-CDL',price:130739,priceStr:'$130,739',mi:'—',status:'pend',loc:'Forest, VA',subcat:'Chip Truck',ev:false,tf:false,units:1},
+  {cond:'New',year:2026,model:'Load King 14x72 Chip Truck',chassis:'Freightliner M2106 4x2',spec:'14x72 chip box',price:123091,priceStr:'$123,091',mi:'—',status:'avail',loc:'Forest, VA',subcat:'Chip Truck',ev:false,tf:false,units:4},
+  {cond:'New',year:2024,model:'Arbortech 11x66 Chip Truck',chassis:'RAM 5500 4x4',spec:'11x66 chip box · 4x4',price:118450,priceStr:'$118,450',mi:'—',status:'avail',loc:'St Paul, MN',subcat:'Chip Truck',ev:false,tf:true,units:1},
+  {cond:'New',year:2023,model:'Arbortech 14x72 Chip Truck',chassis:'Chevrolet 6500 4x2',spec:'14x72 chip box Non-CDL',price:87500,priceStr:'$87,500',mi:'—',status:'pend',loc:'St Paul, MN',subcat:'Chip Truck',ev:false,tf:false,units:1},
+  {cond:'Used',year:2023,model:'Fassi F145AZ.0.22 Grapple',chassis:'Freightliner M2106 4x2',spec:'Forestry grapple · Used',price:169500,priceStr:'$169,500',mi:'7,684 mi / 407 hrs',status:'pend',loc:'Forest, VA',subcat:'Grapple',ev:false,tf:false,units:1},
+  {cond:'Used',year:2023,model:'Terex XT Pro 60/70 Forestry',chassis:'Freightliner M2106 4x2',spec:'60/70ft Forestry Bucket',price:179500,priceStr:'$179,500',mi:'21,638 mi / 2,625 hrs',status:'avail',loc:'Kansas City, MO',subcat:'Forestry Bucket',ev:false,tf:false,units:1},
+],
+pull:[
+  {cond:'New',year:2027,model:'Load King LK910RT-SL Reel Trailer',chassis:'Trailer',spec:'Self-loading reel trailer',price:13800,priceStr:'$13,800',mi:'—',status:'avail',loc:'Elk Point, SD',subcat:'Reel Trailer',ev:false,tf:false,units:3},
+  {cond:'New',year:2026,model:'Load King LK910RT-SL Reel Trailer',chassis:'Trailer',spec:'Self-loading reel trailer',price:13800,priceStr:'$13,800',mi:'—',status:'pend',loc:'Union Grove, WI',subcat:'Reel Trailer',ev:false,tf:false,units:5},
+  {cond:'New',year:2022,model:'Sherman & Reilly BWT-1545',chassis:'Skid-mounted',spec:'Bullwheel tensioner · 1,545 lb',price:79200,priceStr:'$79,200',mi:'—',status:'avail',loc:'Grass Lake, MI',subcat:'Tensioner',ev:false,tf:false,units:1},
+  {cond:'New',year:2025,model:'Reelstrong MRST3-RC-84-60',chassis:'Trailer',spec:'Self-loading reel trailer',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Kansas City, MO',subcat:'Reel Trailer',ev:false,tf:false,units:1},
+  {cond:'New',year:2024,model:'Zeck 618843 WB1500/2.5 Puller-Tensioner',chassis:'Skid-mounted',spec:'1,500kN puller-tensioner',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Various',subcat:'Puller-Tensioner',ev:false,tf:false,units:2},
+  {cond:'New',year:2025,model:'Hogg & Davis ODP40-4HRC XS Puller',chassis:'Skid-mounted',spec:'40kip drum puller',price:null,priceStr:'Call for Quote',mi:'—',status:'cs',loc:'Kansas City, MO',subcat:'Drum Puller',ev:false,tf:false,units:1},
+  {cond:'Used',year:2020,model:'Condux Tesmec CLP500 Line Puller',chassis:'IHC HV507 8x6',spec:'500kN CLP · Reconductoring',price:289500,priceStr:'$289,500',mi:'6,031 mi / 232 hrs',status:'avail',loc:'Bluffton, IN',subcat:'Line Puller',ev:false,tf:false,units:1},
+  {cond:'Used',year:2021,model:'TSE T100/72 Bullwheel Tensioner',chassis:'Skid-mounted',spec:'100kN conductor tensioner',price:70700,priceStr:'$70,700',mi:'—',status:'avail',loc:'El Reno, OK',subcat:'Tensioner',ev:false,tf:false,units:1},
+  {cond:'Used',year:2010,model:'Hogg & Davis ODP200 Drum Puller',chassis:'Skid-mounted',spec:'Drum puller · 200kN',price:43615,priceStr:'$43,615',mi:'—',status:'avail',loc:'Kansas City, MO',subcat:'Drum Puller',ev:false,tf:false,units:1},
+  {cond:'Used',year:2008,model:'TSE DPT40B-3 Three Drum Puller',chassis:'Freightliner M2112 6x6',spec:'3-drum · 40kip truck-mounted',price:60000,priceStr:'$60,000',mi:'38,815 mi / 2,087 hrs',status:'avail',loc:'Canton, OH',subcat:'Drum Puller',ev:false,tf:false,units:1},
+  {cond:'Used',year:2018,model:'Condux 51x75 Reel',chassis:'Stand-alone',spec:'Wire reel 51x75',price:3800,priceStr:'$3,800',mi:'—',status:'pend',loc:'Canton, OH',subcat:'Reel',ev:false,tf:false,units:1},
+  {cond:'Used',year:2015,model:'Sherman+Reilly RCR-76 Split Reel',chassis:'Stand-alone',spec:'Split reel 76"',price:1000,priceStr:'$1,000',mi:'—',status:'avail',loc:'Kansas City, MO',subcat:'Reel',ev:false,tf:false,units:1},
+  {cond:'Used',year:2015,model:'Sherman+Reilly RCR-76 Split Reel',chassis:'Stand-alone',spec:'Split reel 76"',price:1500,priceStr:'$1,500',mi:'—',status:'avail',loc:'Kansas City, MO',subcat:'Reel',ev:false,tf:false,units:1},
+  {cond:'Used',year:2008,model:'Hogg & Davis 9650 Reel',chassis:'Stand-alone',spec:'Wire reel 9650',price:4800,priceStr:'$4,800',mi:'—',status:'pend',loc:'Kansas City, MO',subcat:'Reel',ev:false,tf:false,units:1},
+]
+};
+
+const state={bucket:{filter:'All',sort:'year',asc:false},digger:{filter:'All',sort:'price',asc:true},forest:{filter:'All',sort:'price',asc:false},pull:{filter:'All',sort:'price',asc:false},globalSearch:'',fCat:'',fCond:'',fStatus:'',fPrice:''};
+const charts={};
+const C_NEW='#122463',C_USED='#8C91B0';
+
+// ── helpers ──────────────────────────────────────
+function sb(r){if(r.status==='avail')return'<span class="badge b-new">Available</span>';if(r.status==='pend')return'<span class="badge b-pend">Pending</span>';if(r.status==='call')return'<span class="badge b-call">CFQ</span>';if(r.status==='cs')return'<span class="badge b-cs">Coming Soon</span>';return'';}
+function cb(r){return r.cond==='New'?'<span class="badge b-new">New</span>':'<span class="badge b-used">Used</span>';}
+function fl(r){let s='';if(r.ev)s+=' <span class="badge b-ev">EV</span>';if(r.tf)s+=' <span class="badge b-tf">TF</span>';if(r.units>1)s+=`<span style="font-size:10px;color:var(--text-muted);margin-left:2px">(${r.units})</span>`;return s;}
+function pc(r){if(r.price===null)return'<span class="price-call">Call for Quote</span>';if(r.cad)return`<span class="price-cad">${r.priceStr}</span>`;return`<span class="price-val">${r.priceStr}</span>`;}
+function pcCard(r){if(r.price===null)return{cls:'cfq',txt:'Call for Quote'};if(r.cad)return{cls:'cad',txt:r.priceStr};return{cls:'',txt:r.priceStr};}
+function mg(r,q){if(!q)return true;const s=(r.model+' '+r.chassis+' '+(r.spec||'')+(r.subcat||'')+' '+r.loc).toLowerCase();return q.toLowerCase().split(' ').every(w=>s.includes(w));}
+function gf(rows){const fc=state.fCond,fs=state.fStatus,fp=state.fPrice?parseInt(state.fPrice):null,q=state.globalSearch;return rows.filter(r=>mg(r,q)&&(!fc||r.cond===fc)&&(!fs||r.status===fs)&&(!fp||(r.price&&r.price<=fp)));}
+function srt(rows,k,a){return[...rows].sort((x,y)=>{let av=x[k]??-1,bv=y[k]??-1;if(typeof av==='string'){av=av.toLowerCase();bv=(bv+'').toLowerCase();}return a?(av<bv?-1:av>bv?1:0):(av>bv?-1:av<bv?1:0);});}
+
+// ── render table row ─────────────────────────────
+function tableRow(r,col3){return`<tr><td data-label="Cond.">${cb(r)}</td><td data-label="Year" style="color:var(--text-body);font-weight:600">${r.year}</td><td data-label="Model"><span style="font-weight:600;color:var(--navy)">${r.model}</span>${fl(r)}</td><td data-label="Chassis" style="color:var(--text-sub);font-size:10px">${r.chassis}</td><td data-label="Spec" style="color:var(--text-sub);font-size:10px">${r[col3]||'—'}</td><td data-label="Price">${pc(r)}</td><td data-label="Miles/Hrs" class="mono">${r.mi}</td><td data-label="Status">${sb(r)}</td><td data-label="Location" style="font-size:10px;color:var(--text-muted)">${r.loc}</td></tr>`;}
+
+// ── render mobile card ───────────────────────────
+function mobileCard(r,col3){
+  const p=pcCard(r);
+  const badges=[cb(r)];
+  if(r.ev)badges.push('<span class="badge b-ev">EV</span>');
+  if(r.tf)badges.push('<span class="badge b-tf">Tariff-Free</span>');
+  badges.push(sb(r));
+  return`<div class="eq-card">
+    <div class="eq-card-head">
+      <div class="eq-card-model">${r.year} ${r.model}</div>
+      <div class="eq-card-price ${p.cls}">${p.txt}</div>
+    </div>
+    <div class="eq-card-body">
+      <div class="eq-card-row"><div class="eq-field-label">Chassis</div><div class="eq-field-val">${r.chassis}</div></div>
+      <div class="eq-card-row"><div class="eq-field-label">${col3==='subcat'?'Type':'Spec'}</div><div class="eq-field-val">${r[col3]||r.spec||'—'}</div></div>
+      ${r.mi!=='—'?`<div class="eq-card-row"><div class="eq-field-label">Mileage / Hrs</div><div class="eq-field-val">${r.mi}</div></div>`:''}
+      <div class="eq-card-row"><div class="eq-field-label">Location</div><div class="eq-field-val">${r.loc}</div></div>
+    </div>
+    <div class="eq-card-foot">${badges.join(' ')}</div>
+  </div>`;}
+
+// ── render section ───────────────────────────────
+function renderSection(key,tbId,clId,countId,chartId,col3){
+  let rows=DATA[key].filter(r=>state[key].filter==='All'||r.cond===state[key].filter);
+  rows=gf(rows);rows=srt(rows,state[key].sort,state[key].asc);
+  document.getElementById(countId).textContent=rows.length+' listing'+(rows.length!==1?'s':'');
+  const noMsg='<tr><td colspan="9" class="no-results">No results match your current filters.</td></tr>';
+  document.getElementById(tbId).innerHTML=rows.length===0?noMsg:rows.map(r=>tableRow(r,col3)).join('');
+  const noCard='<div class="no-results">No results match your current filters.</div>';
+  document.getElementById(clId).innerHTML=rows.length===0?noCard:rows.map(r=>mobileCard(r,col3)).join('');
+  // chart
+  const pr=[...rows].filter(r=>r.price).sort((a,b)=>a.price-b.price);
+  if(charts[key])charts[key].destroy();
+  charts[key]=new Chart(document.getElementById(chartId).getContext('2d'),{type:'bar',data:{labels:pr.map(r=>{let l=(r.model||'').replace('Terex XT PRO ','XT ').replace('Versalift ','VL ').replace('Sherman','S+R').replace('Load King ','LK ');return l.length>20?l.slice(0,18)+'…':l;}),datasets:[{data:pr.map(r=>Math.round(r.price/1000)),backgroundColor:pr.map(r=>r.cond==='New'?C_NEW:C_USED),borderRadius:3,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+c.raw.toLocaleString()+'K'}}},scales:{x:{grid:{color:'rgba(18,36,99,0.07)'},ticks:{color:'#6B7199',font:{size:9},callback:v=>'$'+v+'K'}},y:{grid:{display:false},ticks:{color:'#6B7199',font:{size:9}}}}}});
+}
+
+function renderAll(){
+  renderSection('bucket','tb-bucket','cl-bucket','bucket-count','ch-bucket','spec');
+  renderSection('digger','tb-digger','cl-digger','digger-count','ch-digger','spec');
+  renderSection('forest','tb-forest','cl-forest','forest-count','ch-forest','subcat');
+  renderSection('pull','tb-pull','cl-pull','pull-count','ch-pull','subcat');
+  updateKPIs();
+}
+
+function updateKPIs(){
+  const all=[...DATA.bucket,...DATA.digger,...DATA.forest,...DATA.pull];
+  const prices=all.filter(r=>r.price).map(r=>r.price);
+  document.getElementById('kpi-total').textContent=all.length;
+  document.getElementById('kpi-showing').textContent=gf(all).length;
+  document.getElementById('kpi-new').textContent=all.filter(r=>r.cond==='New').length;
+  document.getElementById('kpi-used').textContent=all.filter(r=>r.cond==='Used').length;
+  document.getElementById('kpi-min').textContent='$'+Math.round(Math.min(...prices)/1000)+'K';
+  document.getElementById('kpi-avg').textContent='$'+Math.round(prices.reduce((s,v)=>s+v,0)/prices.length/1000)+'K';
+}
+
+// ── controls ─────────────────────────────────────
+function filterSec(sec,val,el){state[sec].filter=val;el.closest('.subtabs').querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderSection(sec,'tb-'+sec,'cl-'+sec,sec+'-count','ch-'+sec,sec==='forest'||sec==='pull'?'subcat':'spec');}
+function sortSec(sec,key,asc){state[sec].sort=key;state[sec].asc=asc;renderSection(sec,'tb-'+sec,'cl-'+sec,sec+'-count','ch-'+sec,sec==='forest'||sec==='pull'?'subcat':'spec');}
+function showCat(cat,el){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');['bucket','digger','forest','pull'].forEach(c=>document.getElementById('sec-'+c).style.display=(cat==='all'||cat===c)?'block':'none');state.fCat=cat==='all'?'':cat;document.getElementById('fCat').value=state.fCat;}
+function applyFilters(){state.globalSearch=document.getElementById('globalSearch').value;state.fCond=document.getElementById('fCond').value;state.fStatus=document.getElementById('fStatus').value;state.fPrice=document.getElementById('fPrice').value;renderAll();const t=gf([...DATA.bucket,...DATA.digger,...DATA.forest,...DATA.pull]).length;document.getElementById('searchCount').textContent=t+' result'+(t!==1?'s':'');}
+function clearFilters(){['globalSearch','fCat','fCond','fStatus','fPrice'].forEach(id=>document.getElementById(id).value='');Object.assign(state,{globalSearch:'',fCat:'',fCond:'',fStatus:'',fPrice:''});document.querySelectorAll('.cat-btn').forEach((b,i)=>b.classList.toggle('active',i===0));['bucket','digger','forest','pull'].forEach(c=>document.getElementById('sec-'+c).style.display='block');renderAll();document.getElementById('searchCount').textContent=[...DATA.bucket,...DATA.digger,...DATA.forest,...DATA.pull].length+' results';}
+function toggleInsights(el){el.classList.toggle('open');document.getElementById('insightGrid').classList.toggle('open');}
+
+// ── CSV ───────────────────────────────────────────
+function toCSV(rows,cat){const e=v=>`"${String(v||'').replace(/"/g,'""')}"`;const h=['Category','Condition','Year','Model','Chassis','Spec/Type','Price (USD)','Mileage/Hours','Status','Location','EV','Tariff-Free','Units'].map(e).join(',');return[h,...rows.map(r=>[cat,r.cond,r.year,r.model,r.chassis,r.spec||r.subcat||'',r.price??'CFQ',r.mi,r.status,r.loc,r.ev?'Yes':'No',r.tf?'Yes':'No',r.units||1].map(e).join(','))].join('\n');}
+function dl(c,f){const b=new Blob([c],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=f;a.click();showToast('Downloaded: '+f);}
+function exportSectionCSV(sec,label){const rows=gf(DATA[sec].filter(r=>state[sec].filter==='All'||r.cond===state[sec].filter));dl(toCSV(rows,label),'CTOS_'+sec+'.csv');}
+function exportCSV(){const all=[...DATA.bucket.map(r=>({...r,_c:'Bucket Trucks'})),...DATA.digger.map(r=>({...r,_c:'Digger Derricks'})),...DATA.forest.map(r=>({...r,_c:'Forestry'})),...DATA.pull.map(r=>({...r,_c:'Pulling & Tensioning'}))];const f=gf(all);const e=v=>`"${String(v||'').replace(/"/g,'""')}"`;const h=['Category','Condition','Year','Model','Chassis','Spec/Type','Price (USD)','Mileage/Hours','Status','Location','EV','Tariff-Free','Units'].map(e).join(',');dl([h,...f.map(r=>[r._c,r.cond,r.year,r.model,r.chassis,r.spec||r.subcat||'',r.price??'CFQ',r.mi,r.status,r.loc,r.ev?'Yes':'No',r.tf?'Yes':'No',r.units||1].map(e).join(','))].join('\n'),'CTOS_all_equipment_'+new Date().toISOString().slice(0,10)+'.csv');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
+// ── init ─────────────────────────────────────────
+renderAll();
+document.getElementById('searchCount').textContent=[...DATA.bucket,...DATA.digger,...DATA.forest,...DATA.pull].length+' results';
+</script>
+</body>
+</html>

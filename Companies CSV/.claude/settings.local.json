@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python process_companies.py)",
+      "Bash(python3 -c \":*)",
+      "Bash(curl -s --max-time 8 -L http://boringsolutions.ca/contact -A Mozilla/5.0)",
+      "Bash(python fetch_addresses.py)",
+      "Bash(python fetch_addresses2.py)",
+      "Bash(python apply_enrichment.py)",
+      "Bash(python3:*)"
+    ]
+  }
+}

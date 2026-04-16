@@ -1,0 +1,100 @@
+{
+  "run_at": "2026-04-09T15:33:12",
+  "date": "2026-04-09",
+  "label": "Apr 09",
+  "total": 3500,
+  "priced": 2910,
+  "sources": {
+    "MachineryTrader": 1400,
+    "ForestryTrader": 700,
+    "TreeTrader": 700,
+    "CraneTrader": 700
+  },
+  "condition": {
+    "Used": 2729,
+    "New": 771
+  },
+  "categories": {
+    "bucket": {
+      "count": 162,
+      "price": {
+        "count": 144,
+        "min": 10000,
+        "max": 304400,
+        "avg": 91827,
+        "median": 62448,
+        "p25": 42500,
+        "p75": 124995
+      }
+    },
+    "digger": {
+      "count": 24,
+      "price": {
+        "count": 24,
+        "min": 8000,
+        "max": 850000,
+        "avg": 150574,
+        "median": 132200,
+        "p25": 42000,
+        "p75": 164900
+      }
+    },
+    "forest": {
+      "count": 1123,
+      "price": {
+        "count": 938,
+        "min": 6000,
+        "max": 995000,
+        "avg": 173537,
+        "median": 129500,
+        "p25": 59000,
+        "p75": 225000
+      }
+    },
+    "crane": {
+      "count": 88,
+      "price": {
+        "count": 53,
+        "min": 9995,
+        "max": 1700000,
+        "avg": 398274,
+        "median": 295000,
+        "p25": 128500,
+        "p75": 475000
+      }
+    },
+    "pull": {
+      "count": 0,
+      "price": {
+        "count": 0,
+        "min": 0,
+        "max": 0,
+        "avg": 0,
+        "median": 0,
+        "p25": 0,
+        "p75": 0
+      }
+    },
+    "other": {
+      "count": 2103,
+      "price": {
+        "count": 1751,
+        "min": 2000,
+        "max": 7750000,
+        "avg": 155193,
+        "median": 58850,
+        "p25": 33900,
+        "p75": 135000
+      }
+    }
+  },
+  "price_all": {
+    "count": 2910,
+    "min": 2000,
+    "max": 7750000,
+    "avg": 162359,
+    "median": 75000,
+    "p25": 39950,
+    "p75": 177000
+  }
+}

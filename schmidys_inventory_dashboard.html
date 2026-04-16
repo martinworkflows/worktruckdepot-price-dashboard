@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>Schmidy's Machinery — Inventory Dashboard | Work Truck Depot</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#122463;--navy-dark:#0C1A50;--navy-mid:#1A3182;--navy-light:#233EA0;
+  --navy-pale:#E8ECF7;--navy-muted:#D0D7EF;
+  --grey-900:#1A1D2E;--grey-700:#3D4265;--grey-500:#6B7199;
+  --grey-400:#8C91B0;--grey-200:#C8CCE0;--grey-100:#E8EAF0;--grey-50:#F4F5F9;
+  --white:#FFFFFF;
+  --bg-page:var(--grey-50);--bg-row-alt:#F7F8FC;
+  --text-body:var(--grey-900);--text-sub:var(--grey-700);--text-muted:var(--grey-500);
+  --border:var(--grey-200);--border-med:var(--navy-muted);
+  --r:6px;--rl:10px;
+  --touch:44px;
+}
+
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--bg-page);color:var(--text-body);font-size:13px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+.topbar{background:var(--navy-dark);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--navy-light)}
+.topbar-brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.logo-mark{width:34px;height:34px;min-width:34px;background:var(--white);border-radius:5px;display:flex;align-items:center;justify-content:center}
+.logo-mark span{font-weight:900;font-size:11px;color:var(--navy);letter-spacing:-.5px}
+.topbar-name{font-size:13px;font-weight:700;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-meta{font-size:10px;color:var(--grey-400);display:none}
+.topbar-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.topbar-link{font-size:11px;color:var(--grey-400);text-decoration:none;padding:6px 10px;border:1px solid rgba(255,255,255,.2);border-radius:4px;white-space:nowrap;min-height:var(--touch);display:flex;align-items:center}
+.topbar-link:active{background:rgba(255,255,255,.1)}
+.topbar-tag{font-size:10px;background:#8B2B00;color:var(--white);border-radius:3px;padding:3px 8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.topbar-link.hide-xs{display:none}
+
+.page{max-width:1440px;margin:0 auto;padding:14px 14px 60px}
+
+.page-header{background:var(--navy);border-radius:var(--rl);padding:14px 16px;margin-bottom:14px}
+.page-title{font-size:16px;font-weight:800;color:var(--white);letter-spacing:-.01em;line-height:1.25}
+.page-sub{font-size:10px;color:var(--grey-400);margin-top:3px;line-height:1.5}
+.hdr-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.btn{font-size:11px;padding:0 13px;height:var(--touch);border-radius:var(--r);border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:var(--white);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-weight:500;-webkit-tap-highlight-color:transparent}
+.btn:active{background:rgba(255,255,255,.25)}
+.btn-white{background:var(--white);color:var(--navy);border-color:var(--white);font-weight:700}
+.btn-white:active{background:var(--grey-100)}
+.btn-outline-white{background:transparent;color:var(--white);border-color:rgba(255,255,255,.5)}
+.btn-outline-white:active{background:rgba(255,255,255,.12)}
+
+.btn-navy{background:var(--navy);color:var(--white);border:1px solid var(--navy);border-radius:var(--r);font-size:11px;height:var(--touch);padding:0 12px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.btn-navy:active{background:var(--navy-mid)}
+.btn-ghost{background:var(--white);color:var(--navy);border:1px solid var(--border-med);border-radius:var(--r);font-size:11px;height:var(--touch);padding:0 12px;cursor:pointer;font-weight:500;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.btn-ghost:active{background:var(--navy-pale)}
+.sec-actions{display:flex;gap:6px;flex-wrap:wrap}
+
+/* WARNING BANNER */
+.warn-banner{background:#FFF8E7;border:1px solid #E6A817;border-radius:var(--rl);padding:10px 14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;font-size:11px;color:#7A5200}
+.warn-icon{font-size:16px;flex-shrink:0;margin-top:-1px}
+.warn-text strong{display:block;font-size:12px;margin-bottom:2px;color:#5A3A00}
+
+.kpi-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+.kpi{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:12px 14px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--navy)}
+.kpi-label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.kpi-value{font-size:22px;font-weight:800;color:var(--navy);line-height:1}
+.kpi-value.hl{color:var(--navy-light)}
+.kpi-note{font-size:9px;color:var(--text-muted);margin-top:3px}
+
+.insights-wrap{margin-bottom:14px}
+.insights-toggle{width:100%;background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:0 16px;height:var(--touch);display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.insights-toggle .arrow{font-size:14px;transition:transform .2s;display:inline-block}
+.insights-toggle.open .arrow{transform:rotate(180deg)}
+.insight-grid{display:none;gap:8px;margin-top:8px}
+.insight-grid.open{display:grid;grid-template-columns:1fr}
+.insight{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.insight-head{background:var(--navy);padding:8px 12px}
+.ins-metric{font-size:18px;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1px}
+.ins-title{font-size:9px;font-weight:700;color:var(--grey-400);text-transform:uppercase;letter-spacing:.05em}
+.insight-body{padding:9px 12px}
+.ins-body{font-size:11px;color:var(--text-sub);line-height:1.5}
+
+.search-bar-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:12px 14px;margin-bottom:12px;display:flex;flex-direction:column;gap:10px}
+.search-inner{display:flex;align-items:center;gap:8px;background:var(--grey-50);border:1px solid var(--border);border-radius:var(--r);padding:0 10px;height:var(--touch)}
+.search-inner:focus-within{border-color:var(--navy);background:var(--white)}
+.search-input{background:transparent;border:none;padding:0 4px;color:var(--text-body);font-size:14px;width:100%;outline:none;height:100%}
+.search-input::placeholder{color:var(--text-muted);font-size:13px}
+.search-icon{color:var(--text-muted);font-size:15px;flex-shrink:0}
+.filters-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.filter-group{display:flex;flex-direction:column;gap:4px}
+.filter-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em}
+.filter-select{background:var(--grey-50);border:1px solid var(--border);border-radius:var(--r);padding:0 10px;color:var(--text-body);font-size:13px;height:var(--touch);width:100%;outline:none;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238C91B0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.filter-select:focus{border-color:var(--navy)}
+.search-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.search-count{font-size:11px;color:var(--text-muted)}
+
+.cat-nav{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-btn{padding:0 14px;height:var(--touch);border-radius:20px;border:1px solid var(--border-med);background:var(--white);color:var(--text-sub);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.cat-btn:active{background:var(--navy-pale)}
+.cat-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+.section{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:12px}
+.section-head{background:var(--navy);padding:10px 14px;display:flex;flex-direction:column;gap:8px}
+.sec-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.sec-pill{font-size:11px;font-weight:800;color:var(--white);text-transform:uppercase;letter-spacing:.06em}
+.sec-count{font-size:11px;color:var(--grey-400);font-weight:400}
+.section-body{padding:12px 14px}
+
+.subtabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.subtabs::-webkit-scrollbar{display:none}
+.stab{padding:0 14px;height:40px;font-size:12px;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;font-weight:500;display:flex;align-items:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.stab:active{color:var(--navy)}
+.stab.active{color:var(--navy);font-weight:700;border-bottom-color:var(--navy)}
+
+.layout2{display:flex;flex-direction:column;gap:14px}
+.chart-wrap{order:2}
+
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead{display:table-header-group}
+th{font-size:9px;font-weight:700;color:var(--white);background:var(--navy-mid);text-align:left;padding:8px 10px;white-space:nowrap;cursor:pointer;text-transform:uppercase;letter-spacing:.06em;user-select:none}
+th:hover{background:var(--navy-light)}
+th:first-child{border-radius:4px 0 0 4px}
+th:last-child{border-radius:0 4px 4px 0}
+td{padding:7px 10px;border-bottom:1px solid var(--grey-100);vertical-align:middle}
+tr:nth-child(even) td{background:var(--bg-row-alt)}
+tr:last-child td{border-bottom:none}
+.price-val{font-weight:700;color:var(--navy);font-size:12px}
+.price-cad{font-weight:700;color:var(--grey-700);font-size:12px}
+.price-call{color:var(--text-muted);font-style:italic;font-size:11px}
+.mono{font-size:10px;color:var(--text-muted)}
+.no-results{text-align:center;padding:28px;color:var(--text-muted);font-size:12px}
+
+.card-list{display:none;flex-direction:column;gap:8px}
+.eq-card{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.eq-card-head{background:var(--navy-pale);padding:10px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;border-bottom:1px solid var(--navy-muted)}
+.eq-card-model{font-weight:700;color:var(--navy);font-size:13px;line-height:1.35;flex:1;min-width:0}
+.eq-card-price{font-weight:800;color:var(--navy);font-size:14px;white-space:nowrap;flex-shrink:0;text-align:right}
+.eq-card-price.cad{color:var(--grey-700)}
+.eq-card-price.cfq{color:var(--text-muted);font-size:11px;font-style:italic;font-weight:500}
+.eq-card-body{padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:5px 10px}
+.eq-card-row{display:flex;flex-direction:column;gap:1px}
+.eq-card-row.full{grid-column:1/-1}
+.eq-field-label{font-size:9px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em}
+.eq-field-val{font-size:12px;color:var(--text-sub)}
+.eq-card-foot{padding:8px 12px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;border-top:1px solid var(--grey-100);background:var(--grey-50)}
+
+.badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.03em;white-space:nowrap}
+.b-new{background:var(--navy-pale);color:var(--navy);border:1px solid var(--navy-muted)}
+.b-used{background:var(--grey-100);color:var(--grey-700);border:1px solid var(--grey-200)}
+.b-pend{background:var(--grey-100);color:var(--grey-500);border:1px solid var(--grey-200)}
+.b-call{background:var(--navy-pale);color:var(--navy-mid);border:1px solid var(--navy-muted)}
+.b-ev{background:var(--navy-pale);color:var(--navy-light);border:1px solid var(--navy-muted)}
+.b-partial{background:#FFF8E7;color:#7A5200;border:1px solid #E6A817}
+
+.chart-title{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.legend{display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted)}
+.leg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+.spec-section{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:12px}
+.spec-section .section-head{flex-direction:row;align-items:center}
+.spec-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border)}
+.spec-item{padding:12px 14px;background:var(--white)}
+.spec-title{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.spec-title::before{content:'';width:3px;height:13px;background:var(--navy);border-radius:2px;flex-shrink:0}
+.spec-body{font-size:11px;color:var(--text-sub);line-height:1.55}
+
+.footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:10px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px}
+.footer a{color:var(--text-muted);text-decoration:none}
+.conf-tag{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em}
+
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--navy);color:var(--white);padding:10px 20px;border-radius:var(--r);font-size:12px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;border-left:4px solid var(--navy-light);white-space:nowrap}
+#toast.show{opacity:1}
+
+@media(min-width:600px){
+  .page{padding:18px 20px 60px}
+  .topbar-meta{display:block}
+  .topbar-link.hide-xs{display:flex}
+  .page-title{font-size:18px}
+  .kpi-strip{grid-template-columns:repeat(3,1fr)}
+  .insight-grid{grid-template-columns:repeat(2,1fr)}
+  .filters-row{grid-template-columns:repeat(4,1fr)}
+  .search-bar-wrap{flex-direction:row;align-items:center;flex-wrap:wrap}
+  .search-inner{flex:1;min-width:200px}
+  .filters-row{flex:1;min-width:0}
+  .filter-group{flex-direction:row;align-items:center;gap:6px}
+  .filter-label{white-space:nowrap}
+  .filter-select{height:38px}
+  .search-footer{border-left:1px solid var(--border);padding-left:10px}
+  .spec-grid{grid-template-columns:repeat(2,1fr)}
+  .section-head{flex-direction:row;align-items:center}
+  .sec-top{flex:1}
+  .hdr-actions{margin-top:0;justify-content:flex-end}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start}
+}
+
+@media(min-width:900px){
+  .page{padding:24px 28px 60px}
+  .topbar{padding:0 32px}
+  .page-title{font-size:19px}
+  .kpi-strip{grid-template-columns:repeat(6,1fr);gap:10px}
+  .kpi-value{font-size:24px}
+  .insight-grid{grid-template-columns:repeat(4,1fr)}
+  .insights-toggle{display:none}
+  .insight-grid{display:grid!important;margin-top:0}
+  .insights-wrap{margin-bottom:18px}
+  .search-bar-wrap{flex-direction:row;align-items:center;padding:12px 16px;gap:12px;flex-wrap:wrap}
+  .filters-row{display:contents}
+  .filter-group{flex-direction:row;align-items:center;gap:7px;flex-shrink:0}
+  .filter-label{white-space:nowrap;font-size:10px}
+  .filter-select{width:auto;height:36px;padding:0 28px 0 10px}
+  .search-footer{border-left:1px solid var(--border);padding-left:10px;margin-left:auto}
+  .layout2{flex-direction:row;align-items:start}
+  .layout2 .tscroll{flex:1;min-width:0}
+  .chart-wrap{width:270px;flex-shrink:0;order:0}
+  table{display:table}
+  thead{display:table-header-group}
+  tbody{display:table-row-group}
+  .card-list{display:none!important}
+  .tscroll{overflow-x:auto}
+  .spec-grid{grid-template-columns:repeat(3,1fr)}
+  .footer{flex-direction:row;justify-content:space-between}
+  .section-head{padding:11px 18px}
+  .section-body{padding:16px 18px}
+  #toast{bottom:24px;left:auto;right:24px;transform:none}
+}
+
+@media(max-width:899px){
+  .tscroll{display:none}
+  .card-list{display:flex}
+}
+
+@media print{
+  .topbar,.hdr-actions,.cat-nav,.search-bar-wrap,.insights-toggle,.sec-actions,.warn-banner{display:none!important}
+  .insight-grid{display:grid!important}
+  .section{break-inside:avoid}
+  body{background:var(--white)}
+  .layout2{flex-direction:column}
+  .card-list{display:none!important}
+  .tscroll{display:block!important}
+  table{display:table!important}
+  thead{display:table-header-group!important}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="logo-mark"><span>WTD</span></div>
+    <div>
+      <div class="topbar-name">Work Truck Depot</div>
+      <div class="topbar-meta">Schmidy's Machinery — Inventory Analysis</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-tag">Partial Data</span>
+    <a class="topbar-link hide-xs" href="https://www.schmidysmachinery.com/inventory" target="_blank">Schmidy's ↗</a>
+    <a class="topbar-link" href="tel:2179352244">(217) 935-2244</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div>
+      <div class="page-title">Schmidy's Machinery — Inventory Analysis Dashboard</div>
+      <div class="page-sub">Bucket Trucks · Digger Derricks · Crane &amp; Grapple · Forestry &amp; Chip · Clinton, IL · April 8, 2026</div>
+    </div>
+    <div class="hdr-actions">
+      <a class="btn" href="https://www.schmidysmachinery.com/inventory" target="_blank">Full Inventory ↗</a>
+      <button class="btn btn-outline-white" onclick="exportCSV()">⬇ CSV</button>
+      <button class="btn btn-white" onclick="window.print()">🖨 Print</button>
+    </div>
+  </div>
+
+  <!-- WARNING BANNER -->
+  <div class="warn-banner">
+    <span class="warn-icon">⚠</span>
+    <div class="warn-text">
+      <strong>Partial Data — Automated Access Blocked</strong>
+      schmidysmachinery.com returns HTTP 403 to automated requests. The ~31 listings below were recovered from Google's search index and public snippets. The full inventory has ~100+ units. Prices marked "Call for Quote" reflect missing data, not necessarily the dealer's practice. Visit <a href="https://www.schmidysmachinery.com/inventory" target="_blank" style="color:#7A5200;font-weight:700">schmidysmachinery.com/inventory</a> directly for current, complete listings.
+    </div>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-label">Recovered listings</div><div class="kpi-value" id="kpi-total">—</div><div class="kpi-note">of ~100+ actual</div></div>
+    <div class="kpi"><div class="kpi-label">Showing</div><div class="kpi-value hl" id="kpi-showing">—</div><div class="kpi-note">After filters</div></div>
+    <div class="kpi"><div class="kpi-label">New units</div><div class="kpi-value" id="kpi-new">—</div><div class="kpi-note">New inventory</div></div>
+    <div class="kpi"><div class="kpi-label">Used units</div><div class="kpi-value" id="kpi-used">—</div><div class="kpi-note">Pre-Owned</div></div>
+    <div class="kpi"><div class="kpi-label">Price floor</div><div class="kpi-value" id="kpi-min">—</div><div class="kpi-note">Lowest priced unit</div></div>
+    <div class="kpi"><div class="kpi-label">Avg price</div><div class="kpi-value hl" id="kpi-avg">—</div><div class="kpi-note">USD priced units only</div></div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="insights-wrap">
+    <button class="insights-toggle" onclick="toggleInsights(this)">
+      Competitive Intelligence Highlights <span class="arrow">▼</span>
+    </button>
+    <div class="insight-grid" id="insightGrid">
+      <div class="insight"><div class="insight-head"><div class="ins-metric">$20K–$320K</div><div class="ins-title">Confirmed price range</div></div><div class="insight-body"><div class="ins-body">7 priced listings recovered. Cranes top at $190K–$320K (Altec AC38/AC40 series). Digger derricks $70K–$120K. Budget entry: 2006 Altec AM55 insulated at $19,999.</div></div></div>
+      <div class="insight"><div class="insight-head"><div class="ins-metric">8 cranes</div><div class="ins-title">Crane &amp; grapple heavy</div></div><div class="insight-body"><div class="ins-body">Crane trucks are Schmidy's most visible category. Altec AC-40-152S (40-ton, 210ft sheave) and AC38-127S are flagship. Sheave range: 70–210ft. One Palfinger knuckle crane (106.8ft).</div></div></div>
+      <div class="insight"><div class="insight-head"><div class="ins-metric">Altec-focused</div><div class="ins-title">Brand concentration</div></div><div class="insight-body"><div class="ins-body">Virtually all boom equipment is Altec (LR, AM, AN, AC, DC, DM series). Complemented by Terex, Elliott, Palfinger. Freightliner M2 is the dominant chassis across all categories.</div></div></div>
+      <div class="insight"><div class="insight-head"><div class="ins-metric">Clinton, IL</div><div class="ins-title">Single-lot dealer</div></div><div class="insight-body"><div class="ins-body">All inventory located at 5293 Business US-51, Clinton, IL 61727. Family-owned since 1971. ~104 units listed on TreeTrader, ~78 on ForestryTrader. Delivery available.</div></div></div>
+    </div>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar-wrap">
+    <div class="search-inner">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="search" id="globalSearch" placeholder="Search model, chassis, spec, type…" oninput="applyFilters()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+    </div>
+    <div class="filters-row">
+      <div class="filter-group">
+        <label class="filter-label" for="fCat">Category</label>
+        <select class="filter-select" id="fCat" onchange="applyFilters()">
+          <option value="">All</option>
+          <option value="bucket">Bucket Trucks</option>
+          <option value="digger">Digger Derricks</option>
+          <option value="crane">Crane &amp; Grapple</option>
+          <option value="specialty">Forestry &amp; Chip</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label" for="fCond">Condition</label>
+        <select class="filter-select" id="fCond" onchange="applyFilters()">
+          <option value="">All</option>
+          <option value="New">New</option>
+          <option value="Used">Used</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label" for="fStatus">Status</label>
+        <select class="filter-select" id="fStatus" onchange="applyFilters()">
+          <option value="">All</option>
+          <option value="avail">Available (priced)</option>
+          <option value="call">Call for Quote</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label" for="fPrice">Max Price</label>
+        <select class="filter-select" id="fPrice" onchange="applyFilters()">
+          <option value="">Any</option>
+          <option value="50000">Under $50K</option>
+          <option value="100000">Under $100K</option>
+          <option value="150000">Under $150K</option>
+          <option value="200000">Under $200K</option>
+          <option value="300000">Under $300K</option>
+        </select>
+      </div>
+    </div>
+    <div class="search-footer">
+      <span class="search-count" id="searchCount">— results</span>
+      <button class="btn-ghost" onclick="clearFilters()" style="margin-left:8px">✕ Clear</button>
+    </div>
+  </div>
+
+  <!-- CAT NAV -->
+  <div class="cat-nav">
+    <button class="cat-btn active" onclick="showCat('all',this)">All</button>
+    <button class="cat-btn" onclick="showCat('bucket',this)">Bucket Trucks</button>
+    <button class="cat-btn" onclick="showCat('digger',this)">Digger Derricks</button>
+    <button class="cat-btn" onclick="showCat('crane',this)">Crane &amp; Grapple</button>
+    <button class="cat-btn" onclick="showCat('specialty',this)">Forestry &amp; Chip</button>
+  </div>
+
+  <!-- BUCKET TRUCKS -->
+  <div class="section" id="sec-bucket">
+    <div class="section-head">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="sec-pill">Bucket Trucks</span>
+          <span class="sec-count" id="bucket-count">—</span>
+        </div>
+        <div class="sec-actions">
+          <button class="btn-ghost" onclick="sortSec('bucket','price',true)">$ ↑</button>
+          <button class="btn-ghost" onclick="sortSec('bucket','price',false)">$ ↓</button>
+          <button class="btn-ghost" onclick="sortSec('bucket','year',false)">Newest</button>
+          <button class="btn-navy" onclick="exportSectionCSV('bucket','Bucket Trucks')">⬇ CSV</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="subtabs"><div class="stab active" onclick="filterSec('bucket','All',this)">All</div><div class="stab" onclick="filterSec('bucket','New',this)">New</div><div class="stab" onclick="filterSec('bucket','Used',this)">Used</div></div>
+      <div class="layout2">
+        <div class="tscroll"><table><thead><tr><th>Cond.</th><th>Year</th><th>Model / Equipment</th><th>Chassis</th><th>Type / Spec</th><th>Price</th><th>Mileage / Hrs</th><th>Status</th><th>Location</th></tr></thead><tbody id="tb-bucket"></tbody></table></div>
+        <div class="card-list" id="cl-bucket"></div>
+        <div class="chart-wrap">
+          <div class="chart-title">Price range ($K)</div>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#122463"></div>New</div><div class="leg"><div class="leg-dot" style="background:#8C91B0"></div>Used</div></div>
+          <div style="position:relative;height:280px"><canvas id="ch-bucket"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIGGER DERRICKS -->
+  <div class="section" id="sec-digger">
+    <div class="section-head">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="sec-pill">Digger Derricks</span>
+          <span class="sec-count" id="digger-count">—</span>
+        </div>
+        <div class="sec-actions">
+          <button class="btn-ghost" onclick="sortSec('digger','price',true)">$ ↑</button>
+          <button class="btn-ghost" onclick="sortSec('digger','price',false)">$ ↓</button>
+          <button class="btn-ghost" onclick="sortSec('digger','year',false)">Newest</button>
+          <button class="btn-navy" onclick="exportSectionCSV('digger','Digger Derricks')">⬇ CSV</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="subtabs"><div class="stab active" onclick="filterSec('digger','All',this)">All</div><div class="stab" onclick="filterSec('digger','New',this)">New</div><div class="stab" onclick="filterSec('digger','Used',this)">Used</div></div>
+      <div class="layout2">
+        <div class="tscroll"><table><thead><tr><th>Cond.</th><th>Year</th><th>Model / Equipment</th><th>Chassis</th><th>Key Spec</th><th>Price</th><th>Mileage / Hrs</th><th>Status</th><th>Location</th></tr></thead><tbody id="tb-digger"></tbody></table></div>
+        <div class="card-list" id="cl-digger"></div>
+        <div class="chart-wrap">
+          <div class="chart-title">Price range ($K)</div>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#122463"></div>New/CFQ</div><div class="leg"><div class="leg-dot" style="background:#8C91B0"></div>Used</div></div>
+          <div style="position:relative;height:280px"><canvas id="ch-digger"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRANE & GRAPPLE -->
+  <div class="section" id="sec-crane">
+    <div class="section-head">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="sec-pill">Crane &amp; Grapple Trucks</span>
+          <span class="sec-count" id="crane-count">—</span>
+        </div>
+        <div class="sec-actions">
+          <button class="btn-ghost" onclick="sortSec('crane','price',true)">$ ↑</button>
+          <button class="btn-ghost" onclick="sortSec('crane','price',false)">$ ↓</button>
+          <button class="btn-ghost" onclick="sortSec('crane','year',false)">Newest</button>
+          <button class="btn-navy" onclick="exportSectionCSV('crane','Crane & Grapple')">⬇ CSV</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="subtabs"><div class="stab active" onclick="filterSec('crane','All',this)">All</div><div class="stab" onclick="filterSec('crane','New',this)">New</div><div class="stab" onclick="filterSec('crane','Used',this)">Used</div></div>
+      <div class="layout2">
+        <div class="tscroll"><table><thead><tr><th>Cond.</th><th>Year</th><th>Model / Equipment</th><th>Chassis</th><th>Capacity / Type</th><th>Price</th><th>Mileage / Hrs</th><th>Status</th><th>Location</th></tr></thead><tbody id="tb-crane"></tbody></table></div>
+        <div class="card-list" id="cl-crane"></div>
+        <div class="chart-wrap">
+          <div class="chart-title">Price range ($K)</div>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#122463"></div>New</div><div class="leg"><div class="leg-dot" style="background:#8C91B0"></div>Used</div></div>
+          <div style="position:relative;height:280px"><canvas id="ch-crane"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORESTRY, CHIP & SPECIALTY -->
+  <div class="section" id="sec-specialty">
+    <div class="section-head">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="sec-pill">Forestry, Chip &amp; Specialty</span>
+          <span class="sec-count" id="specialty-count">—</span>
+        </div>
+        <div class="sec-actions">
+          <button class="btn-ghost" onclick="sortSec('specialty','price',true)">$ ↑</button>
+          <button class="btn-ghost" onclick="sortSec('specialty','price',false)">$ ↓</button>
+          <button class="btn-ghost" onclick="sortSec('specialty','year',false)">Newest</button>
+          <button class="btn-navy" onclick="exportSectionCSV('specialty','Forestry Chip Specialty')">⬇ CSV</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="subtabs"><div class="stab active" onclick="filterSec('specialty','All',this)">All</div><div class="stab" onclick="filterSec('specialty','New',this)">New</div><div class="stab" onclick="filterSec('specialty','Used',this)">Used</div></div>
+      <div class="layout2">
+        <div class="tscroll"><table><thead><tr><th>Cond.</th><th>Year</th><th>Model / Equipment</th><th>Chassis</th><th>Type</th><th>Price</th><th>Mileage / Hrs</th><th>Status</th><th>Location</th></tr></thead><tbody id="tb-specialty"></tbody></table></div>
+        <div class="card-list" id="cl-specialty"></div>
+        <div class="chart-wrap">
+          <div class="chart-title">Price range ($K)</div>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#122463"></div>New</div><div class="leg"><div class="leg-dot" style="background:#8C91B0"></div>Used</div></div>
+          <div style="position:relative;height:260px"><canvas id="ch-specialty"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC GUIDE -->
+  <div class="spec-section">
+    <div class="section-head" style="flex-direction:row;align-items:center"><span class="sec-pill">Schmidy's Equipment Buyer Reference</span></div>
+    <div class="spec-grid">
+      <div class="spec-item"><div class="spec-title">Under CDL bucket trucks</div><div class="spec-body">Altec LR756 (61ft) and LR758 (63ft) on Freightliner M2 / Ford F750 / Hino 338 — all under 26K GVWR, no CDL required. Ideal for municipal and contractor fleets avoiding CDL overhead.</div></div>
+      <div class="spec-item"><div class="spec-title">Elevator vs. rear mount</div><div class="spec-body">Elevator: boom folds over cab (AN67-E100 = 105ft, LR7-60E70 = 75ft). Rear mount: boom mounts behind cab (LR760-70 = 75ft). Elevators offer greater reach; rear mounts are lower profile.</div></div>
+      <div class="spec-item"><div class="spec-title">Altec crane series — AC vs. AM</div><div class="spec-body">AC = aerial crane (AC35, AC38, AC40 series) — 35–40+ ton rated, 127–210ft sheave. AM = aerial material handler (AM55) — insulated, lighter duty. Match tonnage to your lift specs.</div></div>
+      <div class="spec-item"><div class="spec-title">Digger derrick configurations</div><div class="spec-body">DC47-TR / DM47B-TR = 47ft sheave, distribution class. 4x4 chassis preferred for storm/ROW work. Track-mounted (Panther T16, SDP 50BA) for backyard and off-road access without road permits.</div></div>
+      <div class="spec-item"><div class="spec-title">Chip truck body sizing</div><div class="spec-body">11ft Southco / Altec chip bodies on M2 = Under CDL. Pair with LR-series aerial for full tree-trimming package. Separate chipper units (Altec DC1317) available for stand-alone chipping operations.</div></div>
+      <div class="spec-item"><div class="spec-title">Chassis selection guide</div><div class="spec-body">Freightliner M2 106 = Class 6–7, CDL. Ford F750 / Hino 338 = Class 6, borderline CDL. Ford F550 / International 4300 = Class 4–5, sub-CDL. Peterbilt 365 / 379 = heavy haul crane platform.</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Source: <a href="https://www.schmidysmachinery.com/" target="_blank">schmidysmachinery.com</a> · Data recovered from Google index · April 8, 2026 · Partial data — see warning banner above.</span>
+    <span class="conf-tag">Competitive Intelligence · theworktruckdepot.com</span>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const DATA={
+bucket:[
+  {cond:'Used',year:2019,model:'Altec LR760-70 Rear Mount',chassis:'Freightliner M2 4x2',spec:'75ft Work Height · Rear Mount',subcat:'Rear Mount',price:139500,priceStr:'$139,500',mi:'—',status:'avail',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2016,model:'Altec LR760-70 Rear Mount',chassis:'Peterbilt 337 4x2',spec:'75ft Work Height · Rear Mount',subcat:'Rear Mount',price:129500,priceStr:'$129,500',mi:'—',status:'avail',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2021,model:'Terex 75ft Forestry Bucket',chassis:'Freightliner M2 4x2',spec:'75ft OC · Forestry · Under CDL',subcat:'Forestry/Under CDL',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2016,model:'Altec LR758 Forestry Bucket',chassis:'Freightliner M2 4x2',spec:'63ft Work Height · Under CDL',subcat:'Forestry/Under CDL',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2013,model:'Altec LR756 Forestry Bucket',chassis:'Ford F750 4x2',spec:'61ft Work Height · Under CDL',subcat:'Forestry/Under CDL',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2014,model:'Altec LR756 Forestry Bucket',chassis:'Hino 338 4x2',spec:'61ft Work Height · Under CDL',subcat:'Forestry/Under CDL',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2016,model:'Altec LR760-70 Elevator',chassis:'Freightliner M2 4x2',spec:'75ft Elevator Bucket',subcat:'Elevator',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2017,model:'Altec AN67-E100 Elevator',chassis:'Freightliner M2 6x6',spec:'105ft Elevator · Material Handler · 6x6',subcat:'Elevator',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2018,model:'Altec LR7-60E70 Elevator',chassis:'International 4300 4x2',spec:'75ft Elevator Bucket',subcat:'Elevator',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2006,model:'Altec AM55 Insulated',chassis:'Freightliner M2 106 4x2',spec:'Insulated Material Handler',subcat:'Insulated',price:19999,priceStr:'$19,999',mi:'129,325 mi / 2,208 hrs',status:'avail',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2015,model:'45ft One-Ton Bucket Truck',chassis:'Ford F550 4x2',spec:'45ft Work Height · One-Ton',subcat:'One-Ton',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+],
+digger:[
+  {cond:'Used',year:2020,model:'Altec DC47-TR Digger Derrick',chassis:'Freightliner M2 4x2',spec:'47ft Sheave · 3-Section',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2020,model:'Altec DM47B-TR Digger Derrick',chassis:'International HV 4x4',spec:'47ft Sheave · 3-Section · 4x4',price:119500,priceStr:'$119,500',mi:'—',status:'avail',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2017,model:'Altec 47ft Digger Derrick',chassis:'International 4300 4x2',spec:'47ft Sheave · Distribution',price:69500,priceStr:'$69,500',mi:'—',status:'avail',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2015,model:'Texoma A650-40 Pressure Digger',chassis:'Freightliner M2 106 6x6',spec:'40ft · Pressure Digger · 6x6 Off-Road',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2020,model:'Elliott D86R Track Digger',chassis:'Pinroth Camoplast Panther T16',spec:'80ft Sheave · Track Crawler',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2015,model:'Altec DB37 Track Digger',chassis:'Rubber Track Carrier',spec:'37ft Sheave · Track-Mounted',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+],
+crane:[
+  {cond:'Used',year:2019,model:'Altec AC-40-152S 40-Ton Crane',chassis:'Peterbilt 365 Tri-Axle',spec:'40-Ton · 210ft Sheave',subcat:'Crane',price:319500,priceStr:'$319,500',mi:'—',status:'avail',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2013,model:'Altec AC38-127S Crane',chassis:'Peterbilt 379',spec:'38-Ton · 127ft Sheave',subcat:'Crane',price:190000,priceStr:'$190,000',mi:'23,000 mi / 5,000 hrs',status:'avail',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2018,model:'45-Ton Altec Crane',chassis:'Peterbilt 365',spec:'45-Ton · 137ft Sheave',subcat:'Crane',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2006,model:'Altec AC35-127S 35-Ton Crane',chassis:'Sterling LT9500',spec:'35-Ton · 158ft Sheave',subcat:'Crane',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2013,model:'Palfinger PK50002EH Knuckle Crane',chassis:'Freightliner 108SD',spec:'Knuckle Crane · 106.8ft · SKD',subcat:'Crane',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2015,model:'18-Ton Altec Crane',chassis:'Kenworth T300',spec:'18-Ton · 70ft Work Height',subcat:'Crane',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2022,model:'Altec 100ft Sheave Crane',chassis:'Peterbilt 348',spec:'100ft Sheave Height',subcat:'Crane',price:null,priceStr:'Call for Quote',mi:'17,004 mi',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2010,model:'Altec 166ft Sheave Crane',chassis:'Peterbilt',spec:'166ft Max Sheave · 31ft Jib',subcat:'Crane',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+],
+specialty:[
+  {cond:'Used',year:2018,model:'Freightliner M2 Chip Truck',chassis:'Freightliner M2 4x2',spec:'11ft Southco Chip Body · Under CDL',subcat:'Chip Truck',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2014,model:'Isuzu NRR Chip Truck',chassis:'Isuzu NRR 4x2',spec:'11ft Chip Body · Under CDL',subcat:'Chip Truck',price:null,priceStr:'Call for Quote',mi:'84,186 mi',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2021,model:'Altec DC1317 Chipper',chassis:'Stand-alone',spec:'Self-propelled wood chipper',subcat:'Chipper',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2014,model:'SDP 50BA Backyard Unit',chassis:'Rubber Track Carrier',spec:'60ft Work Height · Terex Hi-Ranger TL55',subcat:'Backyard Unit',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2012,model:'Altec 98ft Off-Road Boom',chassis:'International Workstar 7400 6x6',spec:'98ft Work Height · Off-Road 6x6',subcat:'Off-Road',price:null,priceStr:'Call for Quote',mi:'—',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+  {cond:'Used',year:2015,model:'Freightliner M2 Utility',chassis:'Freightliner M2 106 4x2',spec:'Stahl Bed · Utility Body',subcat:'Specialty',price:null,priceStr:'Call for Quote',mi:'58,233 mi',status:'call',loc:'Clinton, IL',ev:false,tf:false,units:1},
+]
+};
+
+const state={bucket:{filter:'All',sort:'year',asc:false},digger:{filter:'All',sort:'price',asc:true},crane:{filter:'All',sort:'price',asc:false},specialty:{filter:'All',sort:'year',asc:false},globalSearch:'',fCat:'',fCond:'',fStatus:'',fPrice:''};
+const charts={};
+const C_NEW='#122463',C_USED='#8C91B0';
+
+// ── helpers ──────────────────────────────────────
+function sb(r){if(r.status==='avail')return'<span class="badge b-new">Available</span>';if(r.status==='pend')return'<span class="badge b-pend">Pending</span>';if(r.status==='call')return'<span class="badge b-partial">CFQ / Partial</span>';return'';}
+function cb(r){return r.cond==='New'?'<span class="badge b-new">New</span>':'<span class="badge b-used">Used</span>';}
+function fl(r){let s='';if(r.units>1)s+=`<span style="font-size:10px;color:var(--text-muted);margin-left:2px">(${r.units})</span>`;return s;}
+function pc(r){if(r.price===null)return'<span class="price-call">Call for Quote</span>';return`<span class="price-val">${r.priceStr}</span>`;}
+function pcCard(r){if(r.price===null)return{cls:'cfq',txt:'Call for Quote'};return{cls:'',txt:r.priceStr};}
+function mg(r,q){if(!q)return true;const s=(r.model+' '+r.chassis+' '+(r.spec||'')+(r.subcat||'')+' '+r.loc).toLowerCase();return q.toLowerCase().split(' ').every(w=>s.includes(w));}
+function gf(rows){const fc=state.fCond,fs=state.fStatus,fp=state.fPrice?parseInt(state.fPrice):null,q=state.globalSearch;return rows.filter(r=>mg(r,q)&&(!fc||r.cond===fc)&&(!fs||r.status===fs)&&(!fp||(r.price&&r.price<=fp)));}
+function srt(rows,k,a){return[...rows].sort((x,y)=>{let av=x[k]??-1,bv=y[k]??-1;if(typeof av==='string'){av=av.toLowerCase();bv=(bv+'').toLowerCase();}return a?(av<bv?-1:av>bv?1:0):(av>bv?-1:av<bv?1:0);});}
+
+// ── render table row ─────────────────────────────
+function tableRow(r,col3){return`<tr><td data-label="Cond.">${cb(r)}</td><td data-label="Year" style="color:var(--text-body);font-weight:600">${r.year}</td><td data-label="Model"><span style="font-weight:600;color:var(--navy)">${r.model}</span>${fl(r)}</td><td data-label="Chassis" style="color:var(--text-sub);font-size:10px">${r.chassis}</td><td data-label="Type/Spec" style="color:var(--text-sub);font-size:10px">${r[col3]||'—'}</td><td data-label="Price">${pc(r)}</td><td data-label="Miles/Hrs" class="mono">${r.mi}</td><td data-label="Status">${sb(r)}</td><td data-label="Location" style="font-size:10px;color:var(--text-muted)">${r.loc}</td></tr>`;}
+
+// ── render mobile card ───────────────────────────
+function mobileCard(r,col3){
+  const p=pcCard(r);
+  const badges=[cb(r),sb(r)];
+  return`<div class="eq-card">
+    <div class="eq-card-head">
+      <div class="eq-card-model">${r.year} ${r.model}</div>
+      <div class="eq-card-price ${p.cls}">${p.txt}</div>
+    </div>
+    <div class="eq-card-body">
+      <div class="eq-card-row"><div class="eq-field-label">Chassis</div><div class="eq-field-val">${r.chassis}</div></div>
+      <div class="eq-card-row"><div class="eq-field-label">${col3==='subcat'?'Type':'Spec'}</div><div class="eq-field-val">${r[col3]||r.spec||'—'}</div></div>
+      ${r.mi!=='—'?`<div class="eq-card-row"><div class="eq-field-label">Mileage / Hrs</div><div class="eq-field-val">${r.mi}</div></div>`:''}
+      <div class="eq-card-row"><div class="eq-field-label">Location</div><div class="eq-field-val">${r.loc}</div></div>
+    </div>
+    <div class="eq-card-foot">${badges.join(' ')}</div>
+  </div>`;}
+
+// ── render section ───────────────────────────────
+function renderSection(key,tbId,clId,countId,chartId,col3){
+  let rows=DATA[key].filter(r=>state[key].filter==='All'||r.cond===state[key].filter);
+  rows=gf(rows);rows=srt(rows,state[key].sort,state[key].asc);
+  document.getElementById(countId).textContent=rows.length+' listing'+(rows.length!==1?'s':'');
+  const noMsg='<tr><td colspan="9" class="no-results">No results match your current filters.</td></tr>';
+  document.getElementById(tbId).innerHTML=rows.length===0?noMsg:rows.map(r=>tableRow(r,col3)).join('');
+  const noCard='<div class="no-results">No results match your current filters.</div>';
+  document.getElementById(clId).innerHTML=rows.length===0?noCard:rows.map(r=>mobileCard(r,col3)).join('');
+  const pr=[...rows].filter(r=>r.price).sort((a,b)=>a.price-b.price);
+  if(charts[key])charts[key].destroy();
+  if(pr.length===0){document.getElementById(chartId).parentElement.innerHTML='<div class="no-results" style="padding:40px 0">No priced units — data from search index snippets</div>';return;}
+  charts[key]=new Chart(document.getElementById(chartId).getContext('2d'),{type:'bar',data:{labels:pr.map(r=>{let l=(r.model||'').replace('Altec ','').replace('Terex ','');return l.length>20?l.slice(0,18)+'…':l;}),datasets:[{data:pr.map(r=>Math.round(r.price/1000)),backgroundColor:pr.map(r=>r.cond==='New'?C_NEW:C_USED),borderRadius:3,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+c.raw.toLocaleString()+'K'}}},scales:{x:{grid:{color:'rgba(18,36,99,0.07)'},ticks:{color:'#6B7199',font:{size:9},callback:v=>'$'+v+'K'}},y:{grid:{display:false},ticks:{color:'#6B7199',font:{size:9}}}}}});
+}
+
+function renderAll(){
+  renderSection('bucket','tb-bucket','cl-bucket','bucket-count','ch-bucket','subcat');
+  renderSection('digger','tb-digger','cl-digger','digger-count','ch-digger','spec');
+  renderSection('crane','tb-crane','cl-crane','crane-count','ch-crane','subcat');
+  renderSection('specialty','tb-specialty','cl-specialty','specialty-count','ch-specialty','subcat');
+  updateKPIs();
+}
+
+function updateKPIs(){
+  const all=[...DATA.bucket,...DATA.digger,...DATA.crane,...DATA.specialty];
+  const prices=all.filter(r=>r.price).map(r=>r.price);
+  document.getElementById('kpi-total').textContent=all.length;
+  document.getElementById('kpi-showing').textContent=gf(all).length;
+  document.getElementById('kpi-new').textContent=all.filter(r=>r.cond==='New').length;
+  document.getElementById('kpi-used').textContent=all.filter(r=>r.cond==='Used').length;
+  document.getElementById('kpi-min').textContent=prices.length?'$'+Math.round(Math.min(...prices)/1000)+'K':'—';
+  document.getElementById('kpi-avg').textContent=prices.length?'$'+Math.round(prices.reduce((s,v)=>s+v,0)/prices.length/1000)+'K':'—';
+}
+
+// ── controls ─────────────────────────────────────
+function filterSec(sec,val,el){state[sec].filter=val;el.closest('.subtabs').querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));el.classList.add('active');const col3map={bucket:'subcat',digger:'spec',crane:'subcat',specialty:'subcat'};renderSection(sec,'tb-'+sec,'cl-'+sec,sec+'-count','ch-'+sec,col3map[sec]);}
+function sortSec(sec,key,asc){state[sec].sort=key;state[sec].asc=asc;const col3map={bucket:'subcat',digger:'spec',crane:'subcat',specialty:'subcat'};renderSection(sec,'tb-'+sec,'cl-'+sec,sec+'-count','ch-'+sec,col3map[sec]);}
+function showCat(cat,el){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');['bucket','digger','crane','specialty'].forEach(c=>document.getElementById('sec-'+c).style.display=(cat==='all'||cat===c)?'block':'none');state.fCat=cat==='all'?'':cat;document.getElementById('fCat').value=state.fCat;}
+function applyFilters(){state.globalSearch=document.getElementById('globalSearch').value;state.fCond=document.getElementById('fCond').value;state.fStatus=document.getElementById('fStatus').value;state.fPrice=document.getElementById('fPrice').value;renderAll();const t=gf([...DATA.bucket,...DATA.digger,...DATA.crane,...DATA.specialty]).length;document.getElementById('searchCount').textContent=t+' result'+(t!==1?'s':'');}
+function clearFilters(){['globalSearch','fCat','fCond','fStatus','fPrice'].forEach(id=>document.getElementById(id).value='');Object.assign(state,{globalSearch:'',fCat:'',fCond:'',fStatus:'',fPrice:''});document.querySelectorAll('.cat-btn').forEach((b,i)=>b.classList.toggle('active',i===0));['bucket','digger','crane','specialty'].forEach(c=>document.getElementById('sec-'+c).style.display='block');renderAll();document.getElementById('searchCount').textContent=[...DATA.bucket,...DATA.digger,...DATA.crane,...DATA.specialty].length+' results';}
+function toggleInsights(el){el.classList.toggle('open');document.getElementById('insightGrid').classList.toggle('open');}
+
+// ── CSV ───────────────────────────────────────────
+function toCSV(rows,cat){const e=v=>`"${String(v||'').replace(/"/g,'""')}"`;const h=['Category','Condition','Year','Model','Chassis','Spec/Type','Price (USD)','Mileage/Hours','Status','Location','Units'].map(e).join(',');return[h,...rows.map(r=>[cat,r.cond,r.year,r.model,r.chassis,r.spec||r.subcat||'',r.price??'CFQ',r.mi,r.status,r.loc,r.units||1].map(e).join(','))].join('\n');}
+function dl(c,f){const b=new Blob([c],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=f;a.click();showToast('Downloaded: '+f);}
+function exportSectionCSV(sec,label){const col3map={bucket:'subcat',digger:'spec',crane:'subcat',specialty:'subcat'};const rows=gf(DATA[sec].filter(r=>state[sec].filter==='All'||r.cond===state[sec].filter));dl(toCSV(rows,label),'Schmidys_'+sec+'.csv');}
+function exportCSV(){const all=[...DATA.bucket.map(r=>({...r,_c:'Bucket Trucks'})),...DATA.digger.map(r=>({...r,_c:'Digger Derricks'})),...DATA.crane.map(r=>({...r,_c:'Crane & Grapple'})),...DATA.specialty.map(r=>({...r,_c:'Forestry & Chip'}))];const f=gf(all);const e=v=>`"${String(v||'').replace(/"/g,'""')}"`;const h=['Category','Condition','Year','Model','Chassis','Spec/Type','Price (USD)','Mileage/Hours','Status','Location','Units'].map(e).join(',');dl([h,...f.map(r=>[r._c,r.cond,r.year,r.model,r.chassis,r.spec||r.subcat||'',r.price??'CFQ',r.mi,r.status,r.loc,r.units||1].map(e).join(','))].join('\n'),'Schmidys_inventory_'+new Date().toISOString().slice(0,10)+'.csv');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
+// ── init ─────────────────────────────────────────
+renderAll();
+document.getElementById('searchCount').textContent=[...DATA.bucket,...DATA.digger,...DATA.crane,...DATA.specialty].length+' results';
+</script>
+</body>
+</html>

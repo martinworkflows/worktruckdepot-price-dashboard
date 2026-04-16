@@ -1,0 +1,24 @@
+# ══════════════════════════════════════════════════
+#  Work Truck Depot — Market Intelligence Scraper
+#  Pricing URL list — one URL per line
+#  Lines starting with # are comments (ignored)
+# ══════════════════════════════════════════════════
+
+# ── Trader Interactive Network ─────────────────────
+# All sites below share the same HTML structure.
+# Requires Playwright: pip install playwright && python -m playwright install chromium
+
+# Bucket Trucks & Aerial Lifts
+https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+
+# Digger Derricks
+https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+
+# Forestry Equipment (chip trucks, forestry buckets, grapples)
+https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+
+# Tree Care & Bucket Trucks
+https://www.treetrader.com/listings/tree-equipment/for-sale/list
+
+# Crane Trucks & Boom Trucks
+https://www.cranetrader.com/listings/crane-trucks/for-sale/list

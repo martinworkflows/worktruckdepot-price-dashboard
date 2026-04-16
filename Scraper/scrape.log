@@ -1,0 +1,804 @@
+2026-04-08 15:50:56  INFO      ============================================================
+2026-04-08 15:50:56  INFO      Work Truck Depot — Market Intelligence Scraper
+2026-04-08 15:50:56  INFO      Run started: 2026-04-08 15:50:56
+2026-04-08 15:50:56  INFO      ============================================================
+2026-04-08 15:50:56  INFO      URLs to scrape: 5
+2026-04-08 15:50:56  INFO      
+Scraping: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 15:50:59  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 15:51:29  WARNING     Page 1 goto timeout/error: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list", waiting until "networkidle"
+
+2026-04-08 15:51:29  INFO        Saved 2 cookies → trader_cookies.json
+2026-04-08 15:51:29  INFO        ✓ 0 listings from MachineryTrader
+2026-04-08 15:51:29  INFO      
+Scraping: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 15:51:30  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 15:52:00  WARNING     Page 1 goto timeout/error: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.machinerytrader.com/listings/digger-derricks/for-sale/list", waiting until "networkidle"
+
+2026-04-08 15:52:00  INFO        Saved 2 cookies → trader_cookies.json
+2026-04-08 15:52:00  INFO        ✓ 0 listings from MachineryTrader
+2026-04-08 15:52:00  INFO      
+Scraping: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 15:52:00  INFO        [ForestryTrader] Playwright page 1: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 15:52:30  WARNING     Page 1 goto timeout/error: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list", waiting until "networkidle"
+
+2026-04-08 15:52:30  INFO        Saved 2 cookies → trader_cookies.json
+2026-04-08 15:52:30  INFO        ✓ 0 listings from ForestryTrader
+2026-04-08 15:52:30  INFO      
+Scraping: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 15:52:31  INFO        [TreeTrader] Playwright page 1: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 15:53:01  WARNING     Page 1 goto timeout/error: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.treetrader.com/listings/tree-equipment/for-sale/list", waiting until "networkidle"
+
+2026-04-08 15:53:01  INFO        Saved 2 cookies → trader_cookies.json
+2026-04-08 15:53:01  INFO        ✓ 0 listings from TreeTrader
+2026-04-08 15:53:01  INFO      
+Scraping: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 15:53:02  INFO        [CraneTrader] Playwright page 1: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 15:53:32  WARNING     Page 1 goto timeout/error: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.cranetrader.com/listings/crane-trucks/for-sale/list", waiting until "networkidle"
+
+2026-04-08 15:53:32  INFO        Saved 1 cookies → trader_cookies.json
+2026-04-08 15:53:32  INFO        ✓ 0 listings from CraneTrader
+2026-04-08 15:53:32  INFO      
+Total listings scraped: 0
+2026-04-08 15:53:32  INFO      Sources with data:      none
+2026-04-08 15:53:32  INFO      Errors:                 0
+2026-04-08 15:53:32  INFO      
+✓ Dashboard written: C:\Users\marti\Desktop\Work\Work Truck Depot\multi_source_dashboard.html
+2026-04-08 15:53:32  INFO      ============================================================
+2026-04-08 15:53:32  INFO      Run complete.
+2026-04-08 15:53:32  INFO      ============================================================
+2026-04-08 15:54:37  INFO      ============================================================
+2026-04-08 15:54:37  INFO      Work Truck Depot — Market Intelligence Scraper
+2026-04-08 15:54:37  INFO      Run started: 2026-04-08 15:54:37
+2026-04-08 15:54:37  INFO      ============================================================
+2026-04-08 15:54:37  INFO      URLs to scrape: 5
+2026-04-08 15:54:37  INFO      
+Scraping: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 15:54:37  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 15:55:41  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 15:55:41  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 15:55:41  INFO        OK: 0 listings from MachineryTrader
+2026-04-08 15:55:41  INFO      
+Scraping: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 15:55:42  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 15:56:45  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 15:56:45  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 15:56:45  INFO        OK: 0 listings from MachineryTrader
+2026-04-08 15:56:45  INFO      
+Scraping: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 15:56:46  INFO        [ForestryTrader] Playwright page 1: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 15:57:49  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 15:57:49  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 15:57:49  INFO        OK: 0 listings from ForestryTrader
+2026-04-08 15:57:49  INFO      
+Scraping: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 15:57:50  INFO        [TreeTrader] Playwright page 1: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 15:58:53  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 15:58:53  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 15:58:54  INFO        OK: 0 listings from TreeTrader
+2026-04-08 15:58:54  INFO      
+Scraping: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 15:58:54  INFO        [CraneTrader] Playwright page 1: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 15:59:58  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 15:59:58  INFO        Saved 1 cookies to trader_cookies.json
+2026-04-08 15:59:58  INFO        OK: 0 listings from CraneTrader
+2026-04-08 15:59:58  INFO      
+Total listings scraped: 0
+2026-04-08 15:59:58  INFO      Sources with data:      none
+2026-04-08 15:59:58  INFO      Errors:                 0
+2026-04-08 15:59:58  INFO      
+Dashboard written: C:\Users\marti\Desktop\Work\Work Truck Depot\multi_source_dashboard.html
+2026-04-08 15:59:58  INFO      ============================================================
+2026-04-08 15:59:58  INFO      Run complete.
+2026-04-08 15:59:58  INFO      ============================================================
+2026-04-08 16:02:36  INFO      ============================================================
+2026-04-08 16:02:36  INFO      Work Truck Depot — Market Intelligence Scraper
+2026-04-08 16:02:36  INFO      Run started: 2026-04-08 16:02:36
+2026-04-08 16:02:36  INFO      ============================================================
+2026-04-08 16:02:36  INFO      URLs to scrape: 5
+2026-04-08 16:02:36  INFO      
+Scraping: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 16:02:37  WARNING     playwright-stealth not installed — bot detection possible
+2026-04-08 16:02:37  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 16:03:40  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 16:03:40  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 16:03:41  INFO        OK: 0 listings from MachineryTrader
+2026-04-08 16:03:41  INFO      
+Scraping: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 16:03:41  WARNING     playwright-stealth not installed — bot detection possible
+2026-04-08 16:03:41  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 16:04:45  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 16:04:45  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 16:04:45  INFO        OK: 0 listings from MachineryTrader
+2026-04-08 16:04:45  INFO      
+Scraping: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 16:04:46  WARNING     playwright-stealth not installed — bot detection possible
+2026-04-08 16:04:46  INFO        [ForestryTrader] Playwright page 1: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 16:05:49  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 16:05:50  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 16:05:50  INFO        OK: 0 listings from ForestryTrader
+2026-04-08 16:05:50  INFO      
+Scraping: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 16:05:50  WARNING     playwright-stealth not installed — bot detection possible
+2026-04-08 16:05:50  INFO        [TreeTrader] Playwright page 1: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 16:06:54  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 16:06:54  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 16:06:54  INFO        OK: 0 listings from TreeTrader
+2026-04-08 16:06:54  INFO      
+Scraping: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 16:06:55  WARNING     playwright-stealth not installed — bot detection possible
+2026-04-08 16:06:55  INFO        [CraneTrader] Playwright page 1: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 16:07:59  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 16:07:59  INFO        Saved 1 cookies to trader_cookies.json
+2026-04-08 16:08:05  INFO        OK: 0 listings from CraneTrader
+2026-04-08 16:08:05  INFO      
+Total listings scraped: 0
+2026-04-08 16:08:05  INFO      Sources with data:      none
+2026-04-08 16:08:05  INFO      Errors:                 0
+2026-04-08 16:08:05  INFO      
+Dashboard written: C:\Users\marti\Desktop\Work\Work Truck Depot\multi_source_dashboard.html
+2026-04-08 16:08:05  INFO      ============================================================
+2026-04-08 16:08:05  INFO      Run complete.
+2026-04-08 16:08:05  INFO      ============================================================
+2026-04-08 16:08:33  INFO      ============================================================
+2026-04-08 16:08:33  INFO      Work Truck Depot — Market Intelligence Scraper
+2026-04-08 16:08:33  INFO      Run started: 2026-04-08 16:08:33
+2026-04-08 16:08:33  INFO      ============================================================
+2026-04-08 16:08:33  INFO      URLs to scrape: 5
+2026-04-08 16:08:33  INFO      
+Scraping: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 16:08:34  INFO        Stealth mode applied
+2026-04-08 16:08:34  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 16:09:41  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-08 16:09:41  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 16:09:41  INFO        OK: 0 listings from MachineryTrader
+2026-04-08 16:09:41  INFO      
+Scraping: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 16:09:42  INFO        Stealth mode applied
+2026-04-08 16:09:42  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 16:10:45  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-08 16:10:45  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 16:10:45  INFO        OK: 0 listings from MachineryTrader
+2026-04-08 16:10:45  INFO      
+Scraping: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 16:10:46  INFO        Stealth mode applied
+2026-04-08 16:10:46  INFO        [ForestryTrader] Playwright page 1: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 16:11:49  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-08 16:11:49  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 16:11:49  INFO        OK: 0 listings from ForestryTrader
+2026-04-08 16:11:49  INFO      
+Scraping: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 16:11:50  INFO        Stealth mode applied
+2026-04-08 16:11:50  INFO        [TreeTrader] Playwright page 1: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 16:12:53  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-08 16:12:53  INFO        Saved 2 cookies to trader_cookies.json
+2026-04-08 16:12:53  INFO        OK: 0 listings from TreeTrader
+2026-04-08 16:12:53  INFO      
+Scraping: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 16:12:54  INFO        Stealth mode applied
+2026-04-08 16:12:54  INFO        [CraneTrader] Playwright page 1: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 16:13:57  WARNING     No cards on page 1 — title: 'Pardon Our Interruption' url: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-08 16:13:57  INFO        Saved 1 cookies to trader_cookies.json
+2026-04-08 16:13:57  INFO        OK: 0 listings from CraneTrader
+2026-04-08 16:13:57  INFO      
+Total listings scraped: 0
+2026-04-08 16:13:57  INFO      Sources with data:      none
+2026-04-08 16:13:57  INFO      Errors:                 0
+2026-04-08 16:13:57  INFO      
+Dashboard written: C:\Users\marti\Desktop\Work\Work Truck Depot\multi_source_dashboard.html
+2026-04-08 16:13:57  INFO      ============================================================
+2026-04-08 16:13:57  INFO      Run complete.
+2026-04-08 16:13:57  INFO      ============================================================
+2026-04-09 12:37:13  INFO      ============================================================
+2026-04-09 12:37:13  INFO      Work Truck Depot — Market Intelligence Scraper
+2026-04-09 12:37:13  INFO      Run started: 2026-04-09 12:37:13
+2026-04-09 12:37:13  INFO      ============================================================
+2026-04-09 12:37:13  INFO      URLs to scrape: 5
+2026-04-09 12:37:13  INFO      
+Scraping: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-09 12:37:18  INFO        Stealth mode applied
+2026-04-09 12:37:18  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-09 12:37:47  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:37:49  INFO        -> 28 listings on page 1
+2026-04-09 12:37:49  INFO        Saved 8 cookies to trader_cookies.json
+2026-04-09 12:37:50  INFO        OK: 28 listings from MachineryTrader
+2026-04-09 12:37:50  INFO      
+Scraping: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-09 12:37:51  INFO        Stealth mode applied
+2026-04-09 12:37:51  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-09 12:38:19  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:38:20  INFO        -> 28 listings on page 1
+2026-04-09 12:38:20  INFO        Saved 8 cookies to trader_cookies.json
+2026-04-09 12:38:20  INFO        OK: 28 listings from MachineryTrader
+2026-04-09 12:38:20  INFO      
+Scraping: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-09 12:38:21  INFO        Stealth mode applied
+2026-04-09 12:38:21  INFO        [ForestryTrader] Playwright page 1: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-09 12:38:50  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:38:51  INFO        -> 28 listings on page 1
+2026-04-09 12:38:51  INFO        Saved 8 cookies to trader_cookies.json
+2026-04-09 12:38:51  INFO        OK: 28 listings from ForestryTrader
+2026-04-09 12:38:51  INFO      
+Scraping: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-09 12:38:52  INFO        Stealth mode applied
+2026-04-09 12:38:52  INFO        [TreeTrader] Playwright page 1: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-09 12:39:21  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:39:21  INFO        -> 28 listings on page 1
+2026-04-09 12:39:21  INFO        Saved 8 cookies to trader_cookies.json
+2026-04-09 12:39:21  INFO        OK: 28 listings from TreeTrader
+2026-04-09 12:39:21  INFO      
+Scraping: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-09 12:39:22  INFO        Stealth mode applied
+2026-04-09 12:39:22  INFO        [CraneTrader] Playwright page 1: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-09 12:39:51  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:39:51  INFO        -> 28 listings on page 1
+2026-04-09 12:39:51  INFO        Saved 7 cookies to trader_cookies.json
+2026-04-09 12:39:51  INFO        OK: 28 listings from CraneTrader
+2026-04-09 12:39:51  INFO      
+Total listings scraped: 140
+2026-04-09 12:39:51  INFO      Sources with data:      CraneTrader, ForestryTrader, MachineryTrader, TreeTrader
+2026-04-09 12:39:51  INFO      Errors:                 0
+2026-04-09 12:39:51  INFO        bucket    : 10 listings
+2026-04-09 12:39:51  INFO        digger    : 1 listings
+2026-04-09 12:39:51  INFO        forest    : 49 listings
+2026-04-09 12:39:51  INFO        crane     : 11 listings
+2026-04-09 12:39:51  INFO        other     : 69 listings
+2026-04-09 12:39:51  INFO      
+Dashboard written: C:\Users\marti\Desktop\Work\Work Truck Depot\multi_source_dashboard.html
+2026-04-09 12:39:51  INFO      ============================================================
+2026-04-09 12:39:51  INFO      Run complete.
+2026-04-09 12:39:51  INFO      ============================================================
+2026-04-09 12:43:20  INFO      ============================================================
+2026-04-09 12:43:20  INFO      Work Truck Depot — Market Intelligence Scraper
+2026-04-09 12:43:20  INFO      Run started: 2026-04-09 12:43:20
+2026-04-09 12:43:20  INFO      ============================================================
+2026-04-09 12:43:20  INFO      URLs to scrape: 5
+2026-04-09 12:43:20  INFO      
+Scraping: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-09 12:43:21  INFO        Stealth mode applied
+2026-04-09 12:43:21  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list
+2026-04-09 12:43:49  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:43:50  INFO        -> 28 listings on page 1
+2026-04-09 12:43:50  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=2
+2026-04-09 12:43:52  INFO        [MachineryTrader] Playwright page 2: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=2
+2026-04-09 12:44:19  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:44:19  INFO        -> 28 listings on page 2
+2026-04-09 12:44:19  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=3
+2026-04-09 12:44:21  INFO        [MachineryTrader] Playwright page 3: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=3
+2026-04-09 12:44:48  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:44:48  INFO        -> 28 listings on page 3
+2026-04-09 12:44:48  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=4
+2026-04-09 12:44:50  INFO        [MachineryTrader] Playwright page 4: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=4
+2026-04-09 12:45:16  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:45:16  INFO        -> 28 listings on page 4
+2026-04-09 12:45:16  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=5
+2026-04-09 12:45:18  INFO        [MachineryTrader] Playwright page 5: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=5
+2026-04-09 12:45:45  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:45:46  INFO        -> 28 listings on page 5
+2026-04-09 12:45:46  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=6
+2026-04-09 12:45:48  INFO        [MachineryTrader] Playwright page 6: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=6
+2026-04-09 12:46:14  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:46:14  INFO        -> 28 listings on page 6
+2026-04-09 12:46:14  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=7
+2026-04-09 12:46:16  INFO        [MachineryTrader] Playwright page 7: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=7
+2026-04-09 12:46:44  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:46:44  INFO        -> 28 listings on page 7
+2026-04-09 12:46:44  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=8
+2026-04-09 12:46:46  INFO        [MachineryTrader] Playwright page 8: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=8
+2026-04-09 12:47:13  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:47:13  INFO        -> 28 listings on page 8
+2026-04-09 12:47:13  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=9
+2026-04-09 12:47:15  INFO        [MachineryTrader] Playwright page 9: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=9
+2026-04-09 12:47:43  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:47:43  INFO        -> 28 listings on page 9
+2026-04-09 12:47:43  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=10
+2026-04-09 12:47:45  INFO        [MachineryTrader] Playwright page 10: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=10
+2026-04-09 12:48:11  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:48:12  INFO        -> 28 listings on page 10
+2026-04-09 12:48:12  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=11
+2026-04-09 12:48:14  INFO        [MachineryTrader] Playwright page 11: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=11
+2026-04-09 12:48:41  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:48:41  INFO        -> 28 listings on page 11
+2026-04-09 12:48:41  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=12
+2026-04-09 12:48:43  INFO        [MachineryTrader] Playwright page 12: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=12
+2026-04-09 12:49:11  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:49:11  INFO        -> 28 listings on page 12
+2026-04-09 12:49:11  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=13
+2026-04-09 12:49:13  INFO        [MachineryTrader] Playwright page 13: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=13
+2026-04-09 12:49:39  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:49:39  INFO        -> 28 listings on page 13
+2026-04-09 12:49:40  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=14
+2026-04-09 12:49:42  INFO        [MachineryTrader] Playwright page 14: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=14
+2026-04-09 12:50:07  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:50:07  INFO        -> 28 listings on page 14
+2026-04-09 12:50:08  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=15
+2026-04-09 12:50:10  INFO        [MachineryTrader] Playwright page 15: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=15
+2026-04-09 12:50:35  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:50:36  INFO        -> 28 listings on page 15
+2026-04-09 12:50:36  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=16
+2026-04-09 12:50:38  INFO        [MachineryTrader] Playwright page 16: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=16
+2026-04-09 12:51:05  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:51:05  INFO        -> 28 listings on page 16
+2026-04-09 12:51:06  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=17
+2026-04-09 12:51:08  INFO        [MachineryTrader] Playwright page 17: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=17
+2026-04-09 12:51:33  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:51:34  INFO        -> 28 listings on page 17
+2026-04-09 12:51:34  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=18
+2026-04-09 12:51:36  INFO        [MachineryTrader] Playwright page 18: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=18
+2026-04-09 12:52:03  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:52:04  INFO        -> 28 listings on page 18
+2026-04-09 12:52:04  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=19
+2026-04-09 12:52:06  INFO        [MachineryTrader] Playwright page 19: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=19
+2026-04-09 12:52:32  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:52:33  INFO        -> 28 listings on page 19
+2026-04-09 12:52:33  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=20
+2026-04-09 12:52:35  INFO        [MachineryTrader] Playwright page 20: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=20
+2026-04-09 12:53:04  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:53:05  INFO        -> 28 listings on page 20
+2026-04-09 12:53:05  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=21
+2026-04-09 12:53:07  INFO        [MachineryTrader] Playwright page 21: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=21
+2026-04-09 12:53:33  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:53:34  INFO        -> 28 listings on page 21
+2026-04-09 12:53:34  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=22
+2026-04-09 12:53:36  INFO        [MachineryTrader] Playwright page 22: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=22
+2026-04-09 12:54:01  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:54:02  INFO        -> 28 listings on page 22
+2026-04-09 12:54:02  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=23
+2026-04-09 12:54:04  INFO        [MachineryTrader] Playwright page 23: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=23
+2026-04-09 12:54:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:54:31  INFO        -> 28 listings on page 23
+2026-04-09 12:54:31  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=24
+2026-04-09 12:54:33  INFO        [MachineryTrader] Playwright page 24: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=24
+2026-04-09 12:54:59  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:55:00  INFO        -> 28 listings on page 24
+2026-04-09 12:55:00  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=25
+2026-04-09 12:55:02  INFO        [MachineryTrader] Playwright page 25: https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=25
+2026-04-09 12:55:28  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:55:29  INFO        -> 28 listings on page 25
+2026-04-09 12:55:29  INFO        URL-based pagination → https://www.machinerytrader.com/listings/aerial-lifts-bucket-trucks/for-sale/list?Page=26
+2026-04-09 12:55:31  INFO        Saved 8 cookies to trader_cookies.json
+2026-04-09 12:55:32  INFO        OK: 700 listings from MachineryTrader
+2026-04-09 12:55:32  INFO      
+Scraping: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-09 12:55:32  INFO        Stealth mode applied
+2026-04-09 12:55:32  INFO        [MachineryTrader] Playwright page 1: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list
+2026-04-09 12:56:01  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:56:02  INFO        -> 28 listings on page 1
+2026-04-09 12:56:02  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=2
+2026-04-09 12:56:04  INFO        [MachineryTrader] Playwright page 2: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=2
+2026-04-09 12:56:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:56:31  INFO        -> 28 listings on page 2
+2026-04-09 12:56:31  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=3
+2026-04-09 12:56:33  INFO        [MachineryTrader] Playwright page 3: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=3
+2026-04-09 12:57:01  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:57:01  INFO        -> 28 listings on page 3
+2026-04-09 12:57:02  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=4
+2026-04-09 12:57:04  INFO        [MachineryTrader] Playwright page 4: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=4
+2026-04-09 12:57:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:57:30  INFO        -> 28 listings on page 4
+2026-04-09 12:57:31  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=5
+2026-04-09 12:57:33  INFO        [MachineryTrader] Playwright page 5: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=5
+2026-04-09 12:57:58  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:57:59  INFO        -> 28 listings on page 5
+2026-04-09 12:57:59  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=6
+2026-04-09 12:58:01  INFO        [MachineryTrader] Playwright page 6: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=6
+2026-04-09 12:58:28  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:58:29  INFO        -> 28 listings on page 6
+2026-04-09 12:58:29  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=7
+2026-04-09 12:58:31  INFO        [MachineryTrader] Playwright page 7: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=7
+2026-04-09 12:58:57  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:58:57  INFO        -> 28 listings on page 7
+2026-04-09 12:58:58  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=8
+2026-04-09 12:59:00  INFO        [MachineryTrader] Playwright page 8: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=8
+2026-04-09 12:59:24  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:59:25  INFO        -> 28 listings on page 8
+2026-04-09 12:59:25  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=9
+2026-04-09 12:59:27  INFO        [MachineryTrader] Playwright page 9: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=9
+2026-04-09 12:59:52  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 12:59:53  INFO        -> 28 listings on page 9
+2026-04-09 12:59:53  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=10
+2026-04-09 12:59:55  INFO        [MachineryTrader] Playwright page 10: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=10
+2026-04-09 13:00:20  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:00:21  INFO        -> 28 listings on page 10
+2026-04-09 13:00:21  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=11
+2026-04-09 13:00:23  INFO        [MachineryTrader] Playwright page 11: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=11
+2026-04-09 13:00:48  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:00:49  INFO        -> 28 listings on page 11
+2026-04-09 13:00:49  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=12
+2026-04-09 13:00:51  INFO        [MachineryTrader] Playwright page 12: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=12
+2026-04-09 13:01:16  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:01:17  INFO        -> 28 listings on page 12
+2026-04-09 13:01:17  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=13
+2026-04-09 13:01:19  INFO        [MachineryTrader] Playwright page 13: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=13
+2026-04-09 13:01:44  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:01:45  INFO        -> 28 listings on page 13
+2026-04-09 13:01:45  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=14
+2026-04-09 13:01:47  INFO        [MachineryTrader] Playwright page 14: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=14
+2026-04-09 13:02:12  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:02:12  INFO        -> 28 listings on page 14
+2026-04-09 13:02:12  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=15
+2026-04-09 13:02:14  INFO        [MachineryTrader] Playwright page 15: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=15
+2026-04-09 13:02:40  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:02:40  INFO        -> 28 listings on page 15
+2026-04-09 13:02:40  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=16
+2026-04-09 13:02:42  INFO        [MachineryTrader] Playwright page 16: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=16
+2026-04-09 13:03:07  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:03:08  INFO        -> 28 listings on page 16
+2026-04-09 13:03:08  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=17
+2026-04-09 13:03:10  INFO        [MachineryTrader] Playwright page 17: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=17
+2026-04-09 13:03:36  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:03:36  INFO        -> 28 listings on page 17
+2026-04-09 13:03:36  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=18
+2026-04-09 13:03:38  INFO        [MachineryTrader] Playwright page 18: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=18
+2026-04-09 13:04:04  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:04:05  INFO        -> 28 listings on page 18
+2026-04-09 13:04:05  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=19
+2026-04-09 13:04:07  INFO        [MachineryTrader] Playwright page 19: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=19
+2026-04-09 13:04:32  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:04:33  INFO        -> 28 listings on page 19
+2026-04-09 13:04:33  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=20
+2026-04-09 13:04:35  INFO        [MachineryTrader] Playwright page 20: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=20
+2026-04-09 13:05:00  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:05:01  INFO        -> 28 listings on page 20
+2026-04-09 13:05:01  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=21
+2026-04-09 13:05:03  INFO        [MachineryTrader] Playwright page 21: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=21
+2026-04-09 13:05:32  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:05:33  INFO        -> 28 listings on page 21
+2026-04-09 13:05:33  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=22
+2026-04-09 13:05:35  INFO        [MachineryTrader] Playwright page 22: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=22
+2026-04-09 13:06:02  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:06:02  INFO        -> 28 listings on page 22
+2026-04-09 13:06:02  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=23
+2026-04-09 13:06:04  INFO        [MachineryTrader] Playwright page 23: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=23
+2026-04-09 13:06:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:06:31  INFO        -> 28 listings on page 23
+2026-04-09 13:06:31  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=24
+2026-04-09 13:06:33  INFO        [MachineryTrader] Playwright page 24: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=24
+2026-04-09 13:07:00  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:07:00  INFO        -> 28 listings on page 24
+2026-04-09 13:07:01  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=25
+2026-04-09 13:07:03  INFO        [MachineryTrader] Playwright page 25: https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=25
+2026-04-09 13:07:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:07:31  INFO        -> 28 listings on page 25
+2026-04-09 13:07:31  INFO        URL-based pagination → https://www.machinerytrader.com/listings/digger-derricks/for-sale/list?Page=26
+2026-04-09 13:07:33  INFO        Saved 8 cookies to trader_cookies.json
+2026-04-09 13:07:33  INFO        OK: 700 listings from MachineryTrader
+2026-04-09 13:07:33  INFO      
+Scraping: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-09 13:07:34  INFO        Stealth mode applied
+2026-04-09 13:07:34  INFO        [ForestryTrader] Playwright page 1: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list
+2026-04-09 13:08:03  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:08:03  INFO        -> 28 listings on page 1
+2026-04-09 13:08:03  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=2
+2026-04-09 13:08:05  INFO        [ForestryTrader] Playwright page 2: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=2
+2026-04-09 13:08:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:08:31  INFO        -> 28 listings on page 2
+2026-04-09 13:08:31  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=3
+2026-04-09 13:08:33  INFO        [ForestryTrader] Playwright page 3: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=3
+2026-04-09 13:09:00  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:09:01  INFO        -> 28 listings on page 3
+2026-04-09 13:09:01  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=4
+2026-04-09 13:09:03  INFO        [ForestryTrader] Playwright page 4: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=4
+2026-04-09 13:09:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:09:30  INFO        -> 28 listings on page 4
+2026-04-09 13:09:30  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=5
+2026-04-09 13:09:32  INFO        [ForestryTrader] Playwright page 5: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=5
+2026-04-09 13:10:00  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:10:00  INFO        -> 28 listings on page 5
+2026-04-09 13:10:00  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=6
+2026-04-09 13:10:02  INFO        [ForestryTrader] Playwright page 6: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=6
+2026-04-09 13:10:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:10:30  INFO        -> 28 listings on page 6
+2026-04-09 13:10:31  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=7
+2026-04-09 13:10:33  INFO        [ForestryTrader] Playwright page 7: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=7
+2026-04-09 13:10:58  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:10:58  INFO        -> 28 listings on page 7
+2026-04-09 13:10:58  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=8
+2026-04-09 13:11:00  INFO        [ForestryTrader] Playwright page 8: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=8
+2026-04-09 13:11:25  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:11:26  INFO        -> 28 listings on page 8
+2026-04-09 13:11:26  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=9
+2026-04-09 13:11:28  INFO        [ForestryTrader] Playwright page 9: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=9
+2026-04-09 13:11:53  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:11:53  INFO        -> 28 listings on page 9
+2026-04-09 13:11:53  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=10
+2026-04-09 13:11:55  INFO        [ForestryTrader] Playwright page 10: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=10
+2026-04-09 13:12:20  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:12:21  INFO        -> 28 listings on page 10
+2026-04-09 13:12:21  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=11
+2026-04-09 13:12:23  INFO        [ForestryTrader] Playwright page 11: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=11
+2026-04-09 13:12:49  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 13:12:49  INFO        -> 28 listings on page 11
+2026-04-09 13:12:49  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=12
+2026-04-09 13:12:51  INFO        [ForestryTrader] Playwright page 12: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=12
+2026-04-09 14:50:03  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:50:04  INFO        -> 28 listings on page 12
+2026-04-09 14:50:08  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=13
+2026-04-09 14:50:10  INFO        [ForestryTrader] Playwright page 13: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=13
+2026-04-09 14:50:35  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:50:35  INFO        -> 28 listings on page 13
+2026-04-09 14:50:36  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=14
+2026-04-09 14:50:38  INFO        [ForestryTrader] Playwright page 14: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=14
+2026-04-09 14:51:03  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:51:04  INFO        -> 28 listings on page 14
+2026-04-09 14:51:04  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=15
+2026-04-09 14:51:06  INFO        [ForestryTrader] Playwright page 15: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=15
+2026-04-09 14:51:31  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:51:32  INFO        -> 28 listings on page 15
+2026-04-09 14:51:32  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=16
+2026-04-09 14:51:34  INFO        [ForestryTrader] Playwright page 16: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=16
+2026-04-09 14:52:02  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:52:02  INFO        -> 28 listings on page 16
+2026-04-09 14:52:02  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=17
+2026-04-09 14:52:04  INFO        [ForestryTrader] Playwright page 17: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=17
+2026-04-09 14:52:31  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:52:32  INFO        -> 28 listings on page 17
+2026-04-09 14:52:32  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=18
+2026-04-09 14:52:34  INFO        [ForestryTrader] Playwright page 18: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=18
+2026-04-09 14:53:01  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:53:01  INFO        -> 28 listings on page 18
+2026-04-09 14:53:02  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=19
+2026-04-09 14:53:04  INFO        [ForestryTrader] Playwright page 19: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=19
+2026-04-09 14:53:29  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:53:30  INFO        -> 28 listings on page 19
+2026-04-09 14:53:30  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=20
+2026-04-09 14:53:32  INFO        [ForestryTrader] Playwright page 20: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=20
+2026-04-09 14:53:58  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:53:59  INFO        -> 28 listings on page 20
+2026-04-09 14:53:59  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=21
+2026-04-09 14:54:01  INFO        [ForestryTrader] Playwright page 21: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=21
+2026-04-09 14:54:27  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:54:28  INFO        -> 28 listings on page 21
+2026-04-09 14:54:28  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=22
+2026-04-09 14:54:30  INFO        [ForestryTrader] Playwright page 22: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=22
+2026-04-09 14:54:57  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:54:58  INFO        -> 28 listings on page 22
+2026-04-09 14:54:58  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=23
+2026-04-09 14:55:00  INFO        [ForestryTrader] Playwright page 23: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=23
+2026-04-09 14:55:27  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:55:27  INFO        -> 28 listings on page 23
+2026-04-09 14:55:28  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=24
+2026-04-09 14:55:30  INFO        [ForestryTrader] Playwright page 24: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=24
+2026-04-09 14:55:55  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:55:55  INFO        -> 28 listings on page 24
+2026-04-09 14:55:56  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=25
+2026-04-09 14:55:58  INFO        [ForestryTrader] Playwright page 25: https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=25
+2026-04-09 14:56:23  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:56:23  INFO        -> 28 listings on page 25
+2026-04-09 14:56:23  INFO        URL-based pagination → https://www.forestrytrader.com/listings/forestry-equipment/for-sale/list?Page=26
+2026-04-09 14:56:25  INFO        Saved 8 cookies to trader_cookies.json
+2026-04-09 14:56:25  INFO        OK: 700 listings from ForestryTrader
+2026-04-09 14:56:25  INFO      
+Scraping: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-09 14:56:26  INFO        Stealth mode applied
+2026-04-09 14:56:26  INFO        [TreeTrader] Playwright page 1: https://www.treetrader.com/listings/tree-equipment/for-sale/list
+2026-04-09 14:56:55  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:56:55  INFO        -> 28 listings on page 1
+2026-04-09 14:56:55  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=2
+2026-04-09 14:56:57  INFO        [TreeTrader] Playwright page 2: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=2
+2026-04-09 14:57:24  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:57:24  INFO        -> 28 listings on page 2
+2026-04-09 14:57:25  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=3
+2026-04-09 14:57:27  INFO        [TreeTrader] Playwright page 3: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=3
+2026-04-09 14:57:53  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:57:53  INFO        -> 28 listings on page 3
+2026-04-09 14:57:53  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=4
+2026-04-09 14:57:55  INFO        [TreeTrader] Playwright page 4: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=4
+2026-04-09 14:58:21  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:58:22  INFO        -> 28 listings on page 4
+2026-04-09 14:58:22  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=5
+2026-04-09 14:58:24  INFO        [TreeTrader] Playwright page 5: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=5
+2026-04-09 14:58:49  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:58:50  INFO        -> 28 listings on page 5
+2026-04-09 14:58:50  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=6
+2026-04-09 14:58:52  INFO        [TreeTrader] Playwright page 6: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=6
+2026-04-09 14:59:17  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:59:18  INFO        -> 28 listings on page 6
+2026-04-09 14:59:18  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=7
+2026-04-09 14:59:20  INFO        [TreeTrader] Playwright page 7: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=7
+2026-04-09 14:59:46  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 14:59:46  INFO        -> 28 listings on page 7
+2026-04-09 14:59:47  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=8
+2026-04-09 14:59:49  INFO        [TreeTrader] Playwright page 8: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=8
+2026-04-09 15:00:15  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:00:15  INFO        -> 28 listings on page 8
+2026-04-09 15:00:15  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=9
+2026-04-09 15:00:17  INFO        [TreeTrader] Playwright page 9: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=9
+2026-04-09 15:00:43  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:00:44  INFO        -> 28 listings on page 9
+2026-04-09 15:00:44  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=10
+2026-04-09 15:00:46  INFO        [TreeTrader] Playwright page 10: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=10
+2026-04-09 15:01:12  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:01:12  INFO        -> 28 listings on page 10
+2026-04-09 15:01:13  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=11
+2026-04-09 15:01:15  INFO        [TreeTrader] Playwright page 11: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=11
+2026-04-09 15:01:40  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:01:40  INFO        -> 28 listings on page 11
+2026-04-09 15:01:40  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=12
+2026-04-09 15:01:42  INFO        [TreeTrader] Playwright page 12: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=12
+2026-04-09 15:02:09  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:02:09  INFO        -> 28 listings on page 12
+2026-04-09 15:02:09  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=13
+2026-04-09 15:02:11  INFO        [TreeTrader] Playwright page 13: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=13
+2026-04-09 15:02:38  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:02:39  INFO        -> 28 listings on page 13
+2026-04-09 15:02:39  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=14
+2026-04-09 15:02:41  INFO        [TreeTrader] Playwright page 14: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=14
+2026-04-09 15:03:07  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:03:08  INFO        -> 28 listings on page 14
+2026-04-09 15:03:08  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=15
+2026-04-09 15:03:10  INFO        [TreeTrader] Playwright page 15: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=15
+2026-04-09 15:03:36  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:03:37  INFO        -> 28 listings on page 15
+2026-04-09 15:03:37  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=16
+2026-04-09 15:03:39  INFO        [TreeTrader] Playwright page 16: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=16
+2026-04-09 15:04:05  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:04:06  INFO        -> 28 listings on page 16
+2026-04-09 15:04:06  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=17
+2026-04-09 15:04:08  INFO        [TreeTrader] Playwright page 17: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=17
+2026-04-09 15:04:35  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:04:36  INFO        -> 28 listings on page 17
+2026-04-09 15:04:36  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=18
+2026-04-09 15:04:38  INFO        [TreeTrader] Playwright page 18: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=18
+2026-04-09 15:05:04  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:05:05  INFO        -> 28 listings on page 18
+2026-04-09 15:05:05  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=19
+2026-04-09 15:05:07  INFO        [TreeTrader] Playwright page 19: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=19
+2026-04-09 15:05:34  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:05:34  INFO        -> 28 listings on page 19
+2026-04-09 15:05:35  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=20
+2026-04-09 15:05:37  INFO        [TreeTrader] Playwright page 20: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=20
+2026-04-09 15:06:02  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:06:03  INFO        -> 28 listings on page 20
+2026-04-09 15:06:03  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=21
+2026-04-09 15:06:05  INFO        [TreeTrader] Playwright page 21: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=21
+2026-04-09 15:06:30  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:06:31  INFO        -> 28 listings on page 21
+2026-04-09 15:06:31  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=22
+2026-04-09 15:06:33  INFO        [TreeTrader] Playwright page 22: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=22
+2026-04-09 15:07:00  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:07:00  INFO        -> 28 listings on page 22
+2026-04-09 15:07:01  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=23
+2026-04-09 15:07:03  INFO        [TreeTrader] Playwright page 23: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=23
+2026-04-09 15:07:29  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:07:29  INFO        -> 28 listings on page 23
+2026-04-09 15:07:29  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=24
+2026-04-09 15:07:31  INFO        [TreeTrader] Playwright page 24: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=24
+2026-04-09 15:07:57  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:07:58  INFO        -> 28 listings on page 24
+2026-04-09 15:07:58  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=25
+2026-04-09 15:08:00  INFO        [TreeTrader] Playwright page 25: https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=25
+2026-04-09 15:08:25  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:08:26  INFO        -> 28 listings on page 25
+2026-04-09 15:08:26  INFO        URL-based pagination → https://www.treetrader.com/listings/tree-equipment/for-sale/list?Page=26
+2026-04-09 15:08:28  INFO        Saved 8 cookies to trader_cookies.json
+2026-04-09 15:08:28  INFO        OK: 700 listings from TreeTrader
+2026-04-09 15:08:28  INFO      
+Scraping: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-09 15:08:30  INFO        Stealth mode applied
+2026-04-09 15:08:30  INFO        [CraneTrader] Playwright page 1: https://www.cranetrader.com/listings/crane-trucks/for-sale/list
+2026-04-09 15:08:58  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:08:59  INFO        -> 28 listings on page 1
+2026-04-09 15:08:59  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=2
+2026-04-09 15:09:01  INFO        [CraneTrader] Playwright page 2: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=2
+2026-04-09 15:09:27  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:09:28  INFO        -> 28 listings on page 2
+2026-04-09 15:09:28  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=3
+2026-04-09 15:09:30  INFO        [CraneTrader] Playwright page 3: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=3
+2026-04-09 15:09:55  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:09:56  INFO        -> 28 listings on page 3
+2026-04-09 15:09:56  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=4
+2026-04-09 15:09:58  INFO        [CraneTrader] Playwright page 4: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=4
+2026-04-09 15:10:23  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:10:24  INFO        -> 28 listings on page 4
+2026-04-09 15:10:24  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=5
+2026-04-09 15:10:26  INFO        [CraneTrader] Playwright page 5: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=5
+2026-04-09 15:10:52  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:10:53  INFO        -> 28 listings on page 5
+2026-04-09 15:10:53  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=6
+2026-04-09 15:10:55  INFO        [CraneTrader] Playwright page 6: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=6
+2026-04-09 15:11:20  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:11:21  INFO        -> 28 listings on page 6
+2026-04-09 15:11:21  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=7
+2026-04-09 15:11:23  INFO        [CraneTrader] Playwright page 7: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=7
+2026-04-09 15:11:48  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:11:49  INFO        -> 28 listings on page 7
+2026-04-09 15:11:49  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=8
+2026-04-09 15:11:51  INFO        [CraneTrader] Playwright page 8: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=8
+2026-04-09 15:12:16  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:12:17  INFO        -> 28 listings on page 8
+2026-04-09 15:12:17  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=9
+2026-04-09 15:12:19  INFO        [CraneTrader] Playwright page 9: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=9
+2026-04-09 15:12:43  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:12:44  INFO        -> 28 listings on page 9
+2026-04-09 15:12:44  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=10
+2026-04-09 15:12:46  INFO        [CraneTrader] Playwright page 10: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=10
+2026-04-09 15:13:11  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:13:12  INFO        -> 28 listings on page 10
+2026-04-09 15:13:12  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=11
+2026-04-09 15:13:14  INFO        [CraneTrader] Playwright page 11: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=11
+2026-04-09 15:13:39  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:13:39  INFO        -> 28 listings on page 11
+2026-04-09 15:13:40  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=12
+2026-04-09 15:13:42  INFO        [CraneTrader] Playwright page 12: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=12
+2026-04-09 15:14:06  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:14:07  INFO        -> 28 listings on page 12
+2026-04-09 15:14:07  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=13
+2026-04-09 15:14:09  INFO        [CraneTrader] Playwright page 13: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=13
+2026-04-09 15:14:33  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:14:34  INFO        -> 28 listings on page 13
+2026-04-09 15:14:34  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=14
+2026-04-09 15:14:36  INFO        [CraneTrader] Playwright page 14: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=14
+2026-04-09 15:15:00  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:15:01  INFO        -> 28 listings on page 14
+2026-04-09 15:15:01  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=15
+2026-04-09 15:15:03  INFO        [CraneTrader] Playwright page 15: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=15
+2026-04-09 15:15:28  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:15:29  INFO        -> 28 listings on page 15
+2026-04-09 15:15:29  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=16
+2026-04-09 15:15:31  INFO        [CraneTrader] Playwright page 16: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=16
+2026-04-09 15:15:55  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:15:56  INFO        -> 28 listings on page 16
+2026-04-09 15:15:56  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=17
+2026-04-09 15:15:58  INFO        [CraneTrader] Playwright page 17: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=17
+2026-04-09 15:16:24  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:16:24  INFO        -> 28 listings on page 17
+2026-04-09 15:16:24  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=18
+2026-04-09 15:16:26  INFO        [CraneTrader] Playwright page 18: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=18
+2026-04-09 15:16:52  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:16:52  INFO        -> 28 listings on page 18
+2026-04-09 15:16:52  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=19
+2026-04-09 15:16:54  INFO        [CraneTrader] Playwright page 19: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=19
+2026-04-09 15:17:20  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:17:21  INFO        -> 28 listings on page 19
+2026-04-09 15:17:21  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=20
+2026-04-09 15:17:23  INFO        [CraneTrader] Playwright page 20: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=20
+2026-04-09 15:17:48  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:17:49  INFO        -> 28 listings on page 20
+2026-04-09 15:17:49  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=21
+2026-04-09 15:17:51  INFO        [CraneTrader] Playwright page 21: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=21
+2026-04-09 15:18:17  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:18:17  INFO        -> 28 listings on page 21
+2026-04-09 15:18:18  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=22
+2026-04-09 15:18:20  INFO        [CraneTrader] Playwright page 22: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=22
+2026-04-09 15:18:44  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:18:45  INFO        -> 28 listings on page 22
+2026-04-09 15:18:45  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=23
+2026-04-09 15:18:47  INFO        [CraneTrader] Playwright page 23: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=23
+2026-04-09 15:19:12  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:19:13  INFO        -> 28 listings on page 23
+2026-04-09 15:19:13  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=24
+2026-04-09 15:19:15  INFO        [CraneTrader] Playwright page 24: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=24
+2026-04-09 15:19:40  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:19:40  INFO        -> 28 listings on page 24
+2026-04-09 15:19:40  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=25
+2026-04-09 15:19:42  INFO        [CraneTrader] Playwright page 25: https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=25
+2026-04-09 15:20:07  INFO        Cards found with selector: [data-listing-id]
+2026-04-09 15:20:07  INFO        -> 28 listings on page 25
+2026-04-09 15:20:08  INFO        URL-based pagination → https://www.cranetrader.com/listings/crane-trucks/for-sale/list?Page=26
+2026-04-09 15:20:10  INFO        Saved 7 cookies to trader_cookies.json
+2026-04-09 15:20:10  INFO        OK: 700 listings from CraneTrader
+2026-04-09 15:20:10  INFO      
+Total listings scraped: 3500
+2026-04-09 15:20:10  INFO      Sources with data:      CraneTrader, ForestryTrader, MachineryTrader, TreeTrader
+2026-04-09 15:20:10  INFO      Errors:                 0
+2026-04-09 15:20:10  INFO        bucket    : 162 listings
+2026-04-09 15:20:10  INFO        digger    : 24 listings
+2026-04-09 15:20:10  INFO        forest    : 1123 listings
+2026-04-09 15:20:10  INFO        crane     : 88 listings
+2026-04-09 15:20:10  INFO        other     : 2103 listings
+2026-04-09 15:20:10  INFO      
+Dashboard written: C:\Users\marti\Desktop\Work\Work Truck Depot\multi_source_dashboard.html
+2026-04-09 15:20:10  INFO      ============================================================
+2026-04-09 15:20:10  INFO      Run complete.
+2026-04-09 15:20:10  INFO      ============================================================
