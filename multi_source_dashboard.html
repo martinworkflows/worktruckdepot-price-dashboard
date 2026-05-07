@@ -389,20 +389,30 @@ tr:last-child td{border-bottom:none}
         </select>
       </div>
       <div class="filter-group">
-        <label class="filter-label">Price ($)</label>
-        <div class="price-range">
-          <input class="filter-input" type="number" id="fPriceMin" placeholder="Min" min="0" oninput="applyFilters()"/>
-          <span class="price-sep">–</span>
-          <input class="filter-input" type="number" id="fPriceMax" placeholder="Max" min="0" oninput="applyFilters()"/>
-        </div>
+        <label class="filter-label" for="fPrice">Price</label>
+        <select class="filter-select" id="fPrice" onchange="applyFilters()">
+          <option value="">Any</option>
+          <option value="0-25000">Under $25K</option>
+          <option value="0-50000">Under $50K</option>
+          <option value="0-100000">Under $100K</option>
+          <option value="50000-150000">$50K–$150K</option>
+          <option value="100000-200000">$100K–$200K</option>
+          <option value="150000-300000">$150K–$300K</option>
+          <option value="200000-999999999">Over $200K</option>
+          <option value="300000-999999999">Over $300K</option>
+        </select>
       </div>
       <div class="filter-group">
-        <label class="filter-label">Year</label>
-        <div class="price-range">
-          <input class="filter-input" type="number" id="fYearMin" placeholder="From" min="1990" oninput="applyFilters()"/>
-          <span class="price-sep">–</span>
-          <input class="filter-input" type="number" id="fYearMax" placeholder="To" min="1990" oninput="applyFilters()"/>
-        </div>
+        <label class="filter-label" for="fYear">Year</label>
+        <select class="filter-select" id="fYear" onchange="applyFilters()">
+          <option value="">Any</option>
+          <option value="2024">2024 &amp; Newer</option>
+          <option value="2022">2022 &amp; Newer</option>
+          <option value="2020">2020 &amp; Newer</option>
+          <option value="2018">2018 &amp; Newer</option>
+          <option value="2015">2015 &amp; Newer</option>
+          <option value="2010">2010 &amp; Newer</option>
+        </select>
       </div>
     </div>
     <div class="search-footer">
@@ -2033,7 +2043,7 @@ const state = {
   forest:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
   crane:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
   pull:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
-  globalSearch:'', fCat:'', fCond:'', fStatus:'', fSite:'', fPriceMin:'', fPriceMax:'', fYearMin:'', fYearMax:''
+  globalSearch:'', fCat:'', fCond:'', fStatus:'', fSite:'', fPrice:'', fYear:''
 };
 const charts = {};
 const CAT_MEDIANS_DATA = {};
@@ -2074,12 +2084,10 @@ function pc(r){if(r.price===null||r.price===undefined)return'<span class="price-
 function pcCard(r){if(r.price===null||r.price===undefined)return{cls:'cfq',txt:'Call for Price'};return{cls:'',txt:'$'+r.price.toLocaleString()};}
 function mg(r,q){if(!q)return true;const locClean=(r.loc||'').replace(/^Location:/i,'').trim();const s=(r.year+' '+r.model+' '+r.chassis+' '+(r.spec||'')+' '+(r.subcat||'')+' '+locClean+' '+(r.source_site||'')).toLowerCase();const terms=q.toLowerCase().split(',').map(t=>t.trim()).filter(Boolean);return terms.some(term=>term.split(/\s+/).filter(Boolean).every(w=>s.includes(w)));}
 function gf(rows){
-  const fc=state.fCond,fs=state.fStatus,
-        fpMin=state.fPriceMin?parseInt(state.fPriceMin):null,
-        fpMax=state.fPriceMax?parseInt(state.fPriceMax):null,
-        fyMin=state.fYearMin?parseInt(state.fYearMin):null,
-        fyMax=state.fYearMax?parseInt(state.fYearMax):null,
-        q=state.globalSearch,fsite=state.fSite;
+  const fc=state.fCond,fs=state.fStatus,q=state.globalSearch,fsite=state.fSite;
+  let fpMin=null,fpMax=null;
+  if(state.fPrice){const p=state.fPrice.split('-');fpMin=parseInt(p[0]);fpMax=parseInt(p[1]);}
+  const fyMin=state.fYear?parseInt(state.fYear):null;
   return rows.filter(r=>
     mg(r,q) &&
     (!fc    || r.cond===fc) &&
@@ -2087,7 +2095,6 @@ function gf(rows){
     (!fpMin || (r.price && r.price>=fpMin)) &&
     (!fpMax || (r.price && r.price<=fpMax)) &&
     (!fyMin || (r.year && r.year>=fyMin)) &&
-    (!fyMax || (r.year && r.year<=fyMax)) &&
     (!fsite || r.source_site===fsite)
   );
 }
@@ -2289,18 +2296,16 @@ function applyFilters(){
   state.fCond        = document.getElementById('fCond').value;
   state.fStatus      = document.getElementById('fStatus').value;
   state.fSite        = document.getElementById('fSite').value;
-  state.fPriceMin    = document.getElementById('fPriceMin').value;
-  state.fPriceMax    = document.getElementById('fPriceMax').value;
-  state.fYearMin     = document.getElementById('fYearMin').value;
-  state.fYearMax     = document.getElementById('fYearMax').value;
+  state.fPrice       = document.getElementById('fPrice').value;
+  state.fYear        = document.getElementById('fYear').value;
   CATS.forEach(c => state[c].shown = PAGE_SIZE);
   renderAll();
   const t = gf(CATS.flatMap(c=>DATA[c])).length;
   document.getElementById('searchCount').textContent = t+' result'+(t!==1?'s':'');
 }
 function clearFilters(){
-  ['globalSearch','fCat','fCond','fStatus','fSite','fPriceMin','fPriceMax','fYearMin','fYearMax'].forEach(id=>document.getElementById(id).value='');
-  Object.assign(state,{globalSearch:'',fCat:'',fCond:'',fStatus:'',fSite:'',fPriceMin:'',fPriceMax:'',fYearMin:'',fYearMax:''});
+  ['globalSearch','fCat','fCond','fStatus','fSite','fPrice','fYear'].forEach(id=>document.getElementById(id).value='');
+  Object.assign(state,{globalSearch:'',fCat:'',fCond:'',fStatus:'',fSite:'',fPrice:'',fYear:''});
   document.querySelectorAll('.cat-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
   CATS.forEach(c=>document.getElementById('sec-'+c).style.display='block');
   renderAll();
