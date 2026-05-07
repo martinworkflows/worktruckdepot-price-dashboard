@@ -100,6 +100,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
 .filter-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em}
 .filter-select{background:var(--grey-50);border:1px solid var(--border);border-radius:var(--r);padding:0 10px;color:var(--text-body);font-size:13px;height:var(--touch);width:100%;outline:none;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238C91B0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
 .filter-select:focus{border-color:var(--navy)}
+.filter-input{background:var(--grey-50);border:1px solid var(--border);border-radius:var(--r);padding:0 8px;color:var(--text-body);font-size:13px;height:var(--touch);width:100%;outline:none;-moz-appearance:textfield}
+.filter-input::-webkit-outer-spin-button,.filter-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.filter-input:focus{border-color:var(--navy)}
+.price-range{display:flex;align-items:center;gap:4px}
+.price-range .filter-input{min-width:0;flex:1}
+.price-sep{font-size:12px;color:var(--text-muted);flex-shrink:0}
 .search-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .search-count{font-size:11px;color:var(--text-muted)}
 
@@ -382,15 +388,12 @@ tr:last-child td{border-bottom:none}
         </select>
       </div>
       <div class="filter-group">
-        <label class="filter-label" for="fPrice">Max Price</label>
-        <select class="filter-select" id="fPrice" onchange="applyFilters()">
-          <option value="">Any</option>
-          <option value="50000">Under $50K</option>
-          <option value="100000">Under $100K</option>
-          <option value="150000">Under $150K</option>
-          <option value="200000">Under $200K</option>
-          <option value="300000">Under $300K</option>
-        </select>
+        <label class="filter-label">Price ($)</label>
+        <div class="price-range">
+          <input class="filter-input" type="number" id="fPriceMin" placeholder="Min" min="0" oninput="applyFilters()"/>
+          <span class="price-sep">–</span>
+          <input class="filter-input" type="number" id="fPriceMax" placeholder="Max" min="0" oninput="applyFilters()"/>
+        </div>
       </div>
     </div>
     <div class="search-footer">
@@ -2021,7 +2024,7 @@ const state = {
   forest:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
   crane:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
   pull:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
-  globalSearch:'', fCat:'', fCond:'', fStatus:'', fSite:'', fPrice:''
+  globalSearch:'', fCat:'', fCond:'', fStatus:'', fSite:'', fPriceMin:'', fPriceMax:''
 };
 const charts = {};
 const C_NEW = '#122463', C_USED = '#8C91B0';
@@ -2050,16 +2053,19 @@ function sb(r){if(r.status==='avail')return'<span class="badge b-new">Available<
 function cb(r){return r.cond==='New'?'<span class="badge b-new">New</span>':'<span class="badge b-used">Used</span>';}
 function pc(r){if(r.price===null||r.price===undefined)return'<span class="price-call">Call for Price</span>';return`<span class="price-val">$${r.price.toLocaleString()}</span>`;}
 function pcCard(r){if(r.price===null||r.price===undefined)return{cls:'cfq',txt:'Call for Price'};return{cls:'',txt:'$'+r.price.toLocaleString()};}
-function mg(r,q){if(!q)return true;const s=(r.model+' '+r.chassis+' '+(r.spec||'')+(r.subcat||'')+' '+r.loc+' '+(r.source_site||'')).toLowerCase();return q.toLowerCase().split(' ').every(w=>s.includes(w));}
+function mg(r,q){if(!q)return true;const locClean=(r.loc||'').replace(/^Location:/i,'').trim();const s=(r.year+' '+r.model+' '+r.chassis+' '+(r.spec||'')+' '+(r.subcat||'')+' '+locClean+' '+(r.source_site||'')).toLowerCase();const terms=q.toLowerCase().split(',').map(t=>t.trim()).filter(Boolean);return terms.some(term=>term.split(/\s+/).filter(Boolean).every(w=>s.includes(w)));}
 function gf(rows){
-  const fc=state.fCond,fs=state.fStatus,fp=state.fPrice?parseInt(state.fPrice):null,
+  const fc=state.fCond,fs=state.fStatus,
+        fpMin=state.fPriceMin?parseInt(state.fPriceMin):null,
+        fpMax=state.fPriceMax?parseInt(state.fPriceMax):null,
         q=state.globalSearch,fsite=state.fSite;
   return rows.filter(r=>
     mg(r,q) &&
-    (!fc   || r.cond===fc) &&
-    (!fs   || r.status===fs) &&
-    (!fp   || (r.price && r.price<=fp)) &&
-    (!fsite|| r.source_site===fsite)
+    (!fc    || r.cond===fc) &&
+    (!fs    || r.status===fs) &&
+    (!fpMin || (r.price && r.price>=fpMin)) &&
+    (!fpMax || (r.price && r.price<=fpMax)) &&
+    (!fsite || r.source_site===fsite)
   );
 }
 function srt(rows,k,a){return[...rows].sort((x,y)=>{let av=x[k]??-1,bv=y[k]??-1;if(typeof av==='string'){av=av.toLowerCase();bv=(bv+'').toLowerCase();}return a?(av<bv?-1:av>bv?1:0):(av>bv?-1:av<bv?1:0);});}
@@ -2256,15 +2262,16 @@ function applyFilters(){
   state.fCond        = document.getElementById('fCond').value;
   state.fStatus      = document.getElementById('fStatus').value;
   state.fSite        = document.getElementById('fSite').value;
-  state.fPrice       = document.getElementById('fPrice').value;
+  state.fPriceMin    = document.getElementById('fPriceMin').value;
+  state.fPriceMax    = document.getElementById('fPriceMax').value;
   CATS.forEach(c => state[c].shown = PAGE_SIZE);
   renderAll();
   const t = gf(CATS.flatMap(c=>DATA[c])).length;
   document.getElementById('searchCount').textContent = t+' result'+(t!==1?'s':'');
 }
 function clearFilters(){
-  ['globalSearch','fCat','fCond','fStatus','fSite','fPrice'].forEach(id=>document.getElementById(id).value='');
-  Object.assign(state,{globalSearch:'',fCat:'',fCond:'',fStatus:'',fSite:'',fPrice:''});
+  ['globalSearch','fCat','fCond','fStatus','fSite','fPriceMin','fPriceMax'].forEach(id=>document.getElementById(id).value='');
+  Object.assign(state,{globalSearch:'',fCat:'',fCond:'',fStatus:'',fSite:'',fPriceMin:'',fPriceMax:''});
   document.querySelectorAll('.cat-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
   CATS.forEach(c=>document.getElementById('sec-'+c).style.display='block');
   renderAll();
