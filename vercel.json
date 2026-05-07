@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/multi_source_dashboard.html" }
+  ]
+}
