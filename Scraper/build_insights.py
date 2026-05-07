@@ -200,6 +200,20 @@ def build_insights(all_listings: list = None, data_by_category: dict = None):
                 loc_counts[state] = loc_counts.get(state, 0) + 1
     top_locs = sorted(loc_counts.items(), key=lambda x: -x[1])[:20]
 
+    # Median price per state (for top_locs states)
+    state_price_map = {}
+    for l in all_listings:
+        loc = l.get("loc", "")
+        price = l.get("price")
+        if "," in loc and price:
+            state = loc.split(",")[-1].strip()
+            if state:
+                state_price_map.setdefault(state, []).append(price)
+    loc_med_vals = [
+        round(statistics.median(state_price_map[s])) if s in state_price_map else 0
+        for s, _ in top_locs
+    ]
+
     # New vs Used median price per category
     new_med  = {}
     used_med = {}
@@ -242,6 +256,7 @@ def build_insights(all_listings: list = None, data_by_category: dict = None):
         sources=sources,
         condition=condition,
         top_locs=top_locs,
+        loc_med_vals=loc_med_vals,
         new_med=new_med,
         used_med=used_med,
         history=history,
@@ -303,6 +318,7 @@ def _build_html(**ctx) -> str:
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Market Insights | Work Truck Depot</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.3/build/index.umd.min.js"></script>
 <style>
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
 :root{{
@@ -566,15 +582,41 @@ a{{color:inherit;text-decoration:none}}
 
   <!-- ══════════ LOCATIONS TAB ══════════ -->
   <div class="tab-panel" id="tab-locations">
+
     <div class="card">
       <div class="card-head">
-        <div class="card-title">Top Regions by Listing Volume</div>
-        <div class="card-sub">State / region from seller location</div>
+        <div class="card-title">Listings by State — US Map</div>
+        <div class="card-sub">Darker = more inventory</div>
       </div>
       <div class="card-body">
-        <div class="chart-box" style="height:420px"><canvas id="ch-locations"></canvas></div>
+        <div id="map-wrap" style="position:relative;height:420px;display:flex;align-items:center;justify-content:center">
+          <canvas id="ch-map"></canvas>
+          <div id="map-loading" style="position:absolute;font-size:12px;color:var(--grey-500)">Loading map…</div>
+        </div>
       </div>
     </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Top States by Volume</div>
+          <div class="card-sub">Listing count</div>
+        </div>
+        <div class="card-body">
+          <div class="chart-box" style="height:380px"><canvas id="ch-locations"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Median Price by State</div>
+          <div class="card-sub">Priced listings only</div>
+        </div>
+        <div class="card-body">
+          <div class="chart-box" style="height:380px"><canvas id="ch-loc-price"></canvas></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div><!-- /page -->
@@ -613,6 +655,7 @@ const YR_LABELS    = {_j([str(y) for y in yr_labels])};
 const YR_VALS      = {_j(yr_vals)};
 const LOC_LABELS   = {_j(loc_labels)};
 const LOC_COUNTS   = {_j(loc_counts)};
+const LOC_MEDIANS  = {_j(d["loc_med_vals"])};
 const NU_LABELS    = {_j(nu_labels)};
 const NEW_MED      = {_j(new_med_vals)};
 const USED_MED     = {_j(used_med_vals)};
@@ -722,7 +765,7 @@ new Chart(document.getElementById('ch-cat-median'), {{
     scales: {{ x: {{ ticks: {{ font: {{ size:9 }}, maxRotation:45 }} }}, y: {{ beginAtZero:true }} }} }}
 }});''' for c in CATEGORIES if c != "other")}
 
-// Locations
+// Locations bar chart
 new Chart(document.getElementById('ch-locations'), {{
   type: 'bar', indexAxis: 'y',
   data: {{ labels: LOC_LABELS, datasets: [{{ label: 'Listings', data: LOC_COUNTS, backgroundColor: '#122463', borderRadius: 3 }}] }},
@@ -732,6 +775,56 @@ new Chart(document.getElementById('ch-locations'), {{
     scales: {{ x: {{ beginAtZero:true }} }}
   }}
 }});
+
+// Median price by state
+new Chart(document.getElementById('ch-loc-price'), {{
+  type: 'bar', indexAxis: 'y',
+  data: {{ labels: LOC_LABELS, datasets: [{{ label: 'Median Price', data: LOC_MEDIANS, backgroundColor: '#1A3182', borderRadius: 3 }}] }},
+  options: {{
+    responsive:true, maintainAspectRatio:false,
+    plugins: {{ legend: {{ display:false }}, tooltip: {{ callbacks: {{ label: ctx => ` ${{fmt(ctx.raw)}}` }} }} }},
+    scales: {{ x: {{ ticks: {{ callback: v => fmt(v) }}, beginAtZero:true }} }}
+  }}
+}});
+
+// US Choropleth map
+(async function() {{
+  try {{
+    const us = await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(r => r.json());
+    const nation = ChartGeo.topojson.feature(us, us.objects.nation);
+    const states = ChartGeo.topojson.feature(us, us.objects.states);
+    const stateData = {{}};
+    LOC_LABELS.forEach((name, i) => {{ stateData[name] = LOC_COUNTS[i]; }});
+    document.getElementById('map-loading').style.display = 'none';
+    new Chart(document.getElementById('ch-map'), {{
+      type: 'choropleth',
+      data: {{
+        labels: states.features.map(d => d.properties.name),
+        datasets: [{{
+          label: 'Listings',
+          outline: nation.features[0],
+          data: states.features.map(d => ({{ feature: d, value: stateData[d.properties.name] || 0 }}))
+        }}]
+      }},
+      options: {{
+        responsive: true, maintainAspectRatio: false,
+        plugins: {{
+          legend: {{ display: false }},
+          tooltip: {{ callbacks: {{ label: ctx => `${{ctx.label}}: ${{ctx.raw.value}} listing${{ctx.raw.value !== 1 ? 's' : ''}}` }} }}
+        }},
+        scales: {{
+          color: {{
+            quantize: 6,
+            legend: {{ position: 'bottom-right', align: 'bottom' }},
+            interpolate: v => `rgba(18,36,99,${{(0.08 + v * 0.92).toFixed(2)}})`
+          }}
+        }}
+      }}
+    }});
+  }} catch(e) {{
+    document.getElementById('map-loading').textContent = 'Map unavailable (requires internet connection)';
+  }}
+}})();
 
 // Trend charts (only if history available)
 if (HAS_HISTORY) {{
@@ -761,6 +854,23 @@ if (HAS_HISTORY) {{
       }}))
     }},
     options: {{ responsive:true, maintainAspectRatio:false }}
+  }});
+  new Chart(document.getElementById('ch-trend-cat-price'), {{
+    type: 'line',
+    data: {{
+      labels: HIST_DATES,
+      datasets: {_j(cat_labels)}.map((lbl, i) => ({{
+        label: lbl,
+        data: HIST_CAT_MED[{_j(CATEGORIES)}[i]],
+        borderColor: trendColors[i], backgroundColor: 'transparent',
+        tension: 0.3, pointRadius: 4
+      }}))
+    }},
+    options: {{
+      responsive:true, maintainAspectRatio:false,
+      plugins: {{ tooltip: {{ callbacks: {{ label: ctx => ` ${{ctx.dataset.label}}: ${{fmt(ctx.raw)}}` }} }} }},
+      scales: {{ y: {{ ticks: {{ callback: v => fmt(v) }} }} }}
+    }}
   }});
 }}
 </script>
@@ -845,6 +955,10 @@ def _trends_section() -> str:
     <div class="card">
       <div class="card-head"><div class="card-title">Inventory by Category Over Time</div></div>
       <div class="card-body"><div class="chart-box" style="height:300px"><canvas id="ch-trend-cats"></canvas></div></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">Median Price by Category Over Time</div></div>
+      <div class="card-body"><div class="chart-box" style="height:300px"><canvas id="ch-trend-cat-price"></canvas></div></div>
     </div>"""
 
 

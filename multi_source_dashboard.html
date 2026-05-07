@@ -176,6 +176,7 @@ tr:last-child td{border-bottom:none}
 .b-used{background:var(--grey-100);color:var(--grey-700);border:1px solid var(--grey-200)}
 .b-pend{background:var(--grey-100);color:var(--grey-500);border:1px solid var(--grey-200)}
 .b-call{background:var(--navy-pale);color:var(--navy-mid);border:1px solid var(--navy-muted)}
+.b-deal{background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7;margin-left:4px;cursor:default}
 /* Source site badges */
 .b-src-mt{background:#E3F0FB;color:#0D5C8A;border:1px solid #90CAF9}
 .b-src-ft{background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7}
@@ -393,6 +394,14 @@ tr:last-child td{border-bottom:none}
           <input class="filter-input" type="number" id="fPriceMin" placeholder="Min" min="0" oninput="applyFilters()"/>
           <span class="price-sep">–</span>
           <input class="filter-input" type="number" id="fPriceMax" placeholder="Max" min="0" oninput="applyFilters()"/>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Year</label>
+        <div class="price-range">
+          <input class="filter-input" type="number" id="fYearMin" placeholder="From" min="1990" oninput="applyFilters()"/>
+          <span class="price-sep">–</span>
+          <input class="filter-input" type="number" id="fYearMax" placeholder="To" min="1990" oninput="applyFilters()"/>
         </div>
       </div>
     </div>
@@ -2024,9 +2033,19 @@ const state = {
   forest:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
   crane:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
   pull:{filter:'All',sort:'price',asc:false,shown:PAGE_SIZE},
-  globalSearch:'', fCat:'', fCond:'', fStatus:'', fSite:'', fPriceMin:'', fPriceMax:''
+  globalSearch:'', fCat:'', fCond:'', fStatus:'', fSite:'', fPriceMin:'', fPriceMax:'', fYearMin:'', fYearMax:''
 };
 const charts = {};
+const CAT_MEDIANS_DATA = {};
+CATS.forEach(cat => {
+  const prices = DATA[cat].filter(r => r.price != null).map(r => r.price).sort((a,b)=>a-b);
+  if (prices.length) {
+    const mid = Math.floor(prices.length / 2);
+    CAT_MEDIANS_DATA[cat] = prices.length % 2 ? prices[mid] : Math.round((prices[mid-1] + prices[mid]) / 2);
+  } else {
+    CAT_MEDIANS_DATA[cat] = null;
+  }
+});
 const C_NEW = '#122463', C_USED = '#8C91B0';
 
 // ── Source badge ──────────────────────────────────────────────────────────
@@ -2058,6 +2077,8 @@ function gf(rows){
   const fc=state.fCond,fs=state.fStatus,
         fpMin=state.fPriceMin?parseInt(state.fPriceMin):null,
         fpMax=state.fPriceMax?parseInt(state.fPriceMax):null,
+        fyMin=state.fYearMin?parseInt(state.fYearMin):null,
+        fyMax=state.fYearMax?parseInt(state.fYearMax):null,
         q=state.globalSearch,fsite=state.fSite;
   return rows.filter(r=>
     mg(r,q) &&
@@ -2065,20 +2086,24 @@ function gf(rows){
     (!fs    || r.status===fs) &&
     (!fpMin || (r.price && r.price>=fpMin)) &&
     (!fpMax || (r.price && r.price<=fpMax)) &&
+    (!fyMin || (r.year && r.year>=fyMin)) &&
+    (!fyMax || (r.year && r.year<=fyMax)) &&
     (!fsite || r.source_site===fsite)
   );
 }
 function srt(rows,k,a){return[...rows].sort((x,y)=>{let av=x[k]??-1,bv=y[k]??-1;if(typeof av==='string'){av=av.toLowerCase();bv=(bv+'').toLowerCase();}return a?(av<bv?-1:av>bv?1:0):(av>bv?-1:av<bv?1:0);});}
 
 // ── Table row (10 columns) ────────────────────────────────────────────────
-function tableRow(r, col3) {
+function tableRow(r, col3, cat) {
+  const catMed = CAT_MEDIANS_DATA[cat];
+  const isDeal = r.price && catMed && r.price <= catMed * 0.80;
   return `<tr>
     <td data-label="Cond.">${cb(r)}</td>
     <td data-label="Year" style="color:var(--text-body);font-weight:600">${r.year||'—'}</td>
     <td data-label="Model"><span style="font-weight:600;color:var(--navy)">${r.model}</span></td>
     <td data-label="Chassis" style="color:var(--text-sub);font-size:10px">${r.chassis||'—'}</td>
     <td data-label="Spec" style="color:var(--text-sub);font-size:10px">${r[col3]||r.spec||'—'}</td>
-    <td data-label="Price">${pc(r)}</td>
+    <td data-label="Price">${pc(r)}${isDeal ? ' <span class="badge b-deal" title="Priced 20%+ below category median">Deal</span>' : ''}</td>
     <td data-label="Miles/Hrs" class="mono">${r.mi||'—'}</td>
     <td data-label="Status">${sb(r)}</td>
     <td data-label="Location" style="font-size:10px;color:var(--text-muted)">${r.loc||'—'}</td>
@@ -2087,7 +2112,9 @@ function tableRow(r, col3) {
 }
 
 // ── Mobile card ───────────────────────────────────────────────────────────
-function mobileCard(r, col3) {
+function mobileCard(r, col3, cat) {
+  const catMed = CAT_MEDIANS_DATA[cat];
+  const isDeal = r.price && catMed && r.price <= catMed * 0.80;
   const p = pcCard(r);
   const srcLink = r.source_url
     ? `<a href="${r.source_url}" target="_blank" rel="noopener" style="text-decoration:none">${sourceBadge(r.source_site)} ↗</a>`
@@ -2095,7 +2122,7 @@ function mobileCard(r, col3) {
   return `<div class="eq-card">
     <div class="eq-card-head">
       <div class="eq-card-model">${r.year||''} ${r.model}</div>
-      <div class="eq-card-price ${p.cls}">${p.txt}</div>
+      <div class="eq-card-price ${p.cls}">${p.txt}${isDeal ? ' <span class="badge b-deal" title="Below market">Deal</span>' : ''}</div>
     </div>
     <div class="eq-card-body">
       <div class="eq-card-row"><div class="eq-field-label">Chassis</div><div class="eq-field-val">${r.chassis||'—'}</div></div>
@@ -2126,10 +2153,10 @@ function renderSection(key) {
   document.getElementById(key+'-count').textContent = total+' listing'+(total!==1?'s':'');
 
   const noMsg = `<tr><td colspan="10" class="no-results">No results match your current filters.</td></tr>`;
-  document.getElementById('tb-'+key).innerHTML = visible.length ? visible.map(r=>tableRow(r,col3)).join('') : noMsg;
+  document.getElementById('tb-'+key).innerHTML = visible.length ? visible.map(r=>tableRow(r,col3,key)).join('') : noMsg;
 
   const noCard = '<div class="no-results">No results match your current filters.</div>';
-  document.getElementById('cl-'+key).innerHTML = visible.length ? visible.map(r=>mobileCard(r,col3)).join('') : noCard;
+  document.getElementById('cl-'+key).innerHTML = visible.length ? visible.map(r=>mobileCard(r,col3,key)).join('') : noCard;
 
   // Load more button
   const lm = document.getElementById('lm-'+key);
@@ -2264,14 +2291,16 @@ function applyFilters(){
   state.fSite        = document.getElementById('fSite').value;
   state.fPriceMin    = document.getElementById('fPriceMin').value;
   state.fPriceMax    = document.getElementById('fPriceMax').value;
+  state.fYearMin     = document.getElementById('fYearMin').value;
+  state.fYearMax     = document.getElementById('fYearMax').value;
   CATS.forEach(c => state[c].shown = PAGE_SIZE);
   renderAll();
   const t = gf(CATS.flatMap(c=>DATA[c])).length;
   document.getElementById('searchCount').textContent = t+' result'+(t!==1?'s':'');
 }
 function clearFilters(){
-  ['globalSearch','fCat','fCond','fStatus','fSite','fPriceMin','fPriceMax'].forEach(id=>document.getElementById(id).value='');
-  Object.assign(state,{globalSearch:'',fCat:'',fCond:'',fStatus:'',fSite:'',fPriceMin:'',fPriceMax:''});
+  ['globalSearch','fCat','fCond','fStatus','fSite','fPriceMin','fPriceMax','fYearMin','fYearMax'].forEach(id=>document.getElementById(id).value='');
+  Object.assign(state,{globalSearch:'',fCat:'',fCond:'',fStatus:'',fSite:'',fPriceMin:'',fPriceMax:'',fYearMin:'',fYearMax:''});
   document.querySelectorAll('.cat-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
   CATS.forEach(c=>document.getElementById('sec-'+c).style.display='block');
   renderAll();

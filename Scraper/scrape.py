@@ -12,6 +12,7 @@ Scheduled:        via run_scraper.bat + Windows Task Scheduler
 
 import json
 import logging
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -113,6 +114,29 @@ def main():
     log.info(f"\nTotal listings scraped: {len(all_listings)}")
     log.info(f"Sources with data:      {', '.join(sorted(sources_found)) or 'none'}")
     log.info(f"Errors:                 {len(errors)}")
+
+    # ── Deduplicate listings ──────────────────────────────────────────────
+    seen_urls = set()
+    seen_ids  = set()
+    deduped   = []
+    for listing in all_listings:
+        url = listing.get("source_url", "")
+        if url in seen_urls:
+            continue
+        seen_urls.add(url)
+        m = re.search(r'/(\d{6,})', url)
+        if m:
+            listing_id = m.group(1)
+            if listing_id in seen_ids:
+                continue
+            seen_ids.add(listing_id)
+        deduped.append(listing)
+    removed = len(all_listings) - len(deduped)
+    if removed:
+        log.info(f"Duplicates removed:     {removed} ({len(all_listings)} → {len(deduped)})")
+    else:
+        log.info("Duplicates removed:     0")
+    all_listings = deduped
 
     # ── Categorize ────────────────────────────────────────────────────────
     from classify import categorize_all
