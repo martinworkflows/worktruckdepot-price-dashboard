@@ -318,7 +318,7 @@ def _build_html(**ctx) -> str:
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Market Insights | Work Truck Depot</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.6/build/index.umd.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
 :root{{
@@ -589,10 +589,7 @@ a{{color:inherit;text-decoration:none}}
         <div class="card-sub">Darker = more inventory</div>
       </div>
       <div class="card-body">
-        <div id="map-wrap" style="position:relative;height:420px;display:flex;align-items:center;justify-content:center">
-          <canvas id="ch-map" style="width:100%;height:100%"></canvas>
-          <div id="map-loading" style="position:absolute;font-size:12px;color:var(--grey-500)">Loading map…</div>
-        </div>
+        <div id="map-div" style="height:420px;width:100%"></div>
       </div>
     </div>
 
@@ -787,44 +784,22 @@ new Chart(document.getElementById('ch-loc-price'), {{
   }}
 }});
 
-// US Choropleth map
-(async function() {{
-  try {{
-    const us = await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(r => r.json());
-    const nation = ChartGeo.topojson.feature(us, us.objects.nation);
-    const states = ChartGeo.topojson.feature(us, us.objects.states);
-    const stateData = {{}};
-    LOC_LABELS.forEach((name, i) => {{ stateData[name] = LOC_COUNTS[i]; }});
-    document.getElementById('map-loading').style.display = 'none';
-    new Chart(document.getElementById('ch-map'), {{
-      type: 'choropleth',
-      data: {{
-        labels: states.features.map(d => d.properties.name),
-        datasets: [{{
-          label: 'Listings',
-          outline: nation.features[0],
-          data: states.features.map(d => ({{ feature: d, value: stateData[d.properties.name] || 0 }}))
-        }}]
-      }},
-      options: {{
-        responsive: true, maintainAspectRatio: false,
-        plugins: {{
-          legend: {{ display: false }},
-          tooltip: {{ callbacks: {{ label: ctx => `${{ctx.label}}: ${{ctx.raw.value}} listing${{ctx.raw.value !== 1 ? 's' : ''}}` }} }}
-        }},
-        scales: {{
-          color: {{
-            quantize: 6,
-            legend: {{ position: 'bottom-right', align: 'bottom' }},
-            interpolate: v => `rgba(18,36,99,${{(0.08 + v * 0.92).toFixed(2)}})`
-          }}
-        }}
-      }}
-    }});
-  }} catch(e) {{
-    document.getElementById('map-loading').textContent = 'Map unavailable (requires internet connection)';
-  }}
-}})();
+// US Choropleth map — Google Charts GeoChart
+google.charts.load('current', {{packages: ['geochart']}});
+google.charts.setOnLoadCallback(function() {{
+  const rows = LOC_LABELS.map((s, i) => [s, LOC_COUNTS[i]]);
+  const data = google.visualization.arrayToDataTable([['State', 'Listings'], ...rows]);
+  const chart = new google.visualization.GeoChart(document.getElementById('map-div'));
+  chart.draw(data, {{
+    region: 'US',
+    resolution: 'provinces',
+    colorAxis: {{minValue: 0, colors: ['#E8ECF7', '#122463']}},
+    backgroundColor: '#F4F5F9',
+    datalessRegionColor: '#E8EAF0',
+    defaultColor: '#E8EAF0',
+    legend: 'none',
+  }});
+}});
 
 // Trend charts (only if history available)
 if (HAS_HISTORY) {{
